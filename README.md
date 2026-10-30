@@ -2,7 +2,24 @@
 
 > *"Not retiring — just leveling up from shaping engineers in lecture halls to building the future as a Founder & CEO."*
 
+### 🌐 Live Production Website: [https://viomesh-sir-farewell.vercel.app](https://viomesh-sir-farewell.vercel.app)
+
 An interactive archival tribute and self-balancing AVL photo tree celebrating **Prof. Viomesh Singh**'s mentorship, iconic lectures, and his next chapter launching his startup company.
+
+---
+
+## 📸 The 8 Photo Memories (AVL Nodes)
+
+| Node & Key | Photo Preview | Story & Complexity |
+| :---: | :---: | :--- |
+| **Node #10** | <img src="Image-6.jpeg" width="160" alt="Beta Tujhe C Ka printf() Bhi Nahi Aata"> | **"Beta Tujhe C Ka printf() Bhi Nahi Aata"**<br>`O(1) Reality Check` — Day 1 freshman reality check and C pointers. |
+| **Node #20** | <img src="Image-8.jpeg" width="160" alt="Recursion With Viomesh Sir"> | **"Recursion With Viomesh Sir"**<br>`O(2^n) Call Stack` — Whiteboard call stacks and divide-and-conquer dry runs. |
+| **Node #30** | <img src="Image-9.jpeg" width="160" alt="Any Doubts? Vaise Aate Toh Hai Nahi!"> | **"Any Doubts? Vaise Aate Toh Hai Nahi!"**<br>`O(0) Doubts` — The classic classroom banter that got 120 shy engineers asking questions. |
+| **Node #40** | <img src="Image-2.jpeg" width="160" alt="Job Is Available For EVERYONE!"> | **"Job Is Available For EVERYONE!"**<br>`O(n) Offers` — Placement season motivation and cracking coding rounds. |
+| **Node #50** | <img src="Image-1.jpeg" width="160" alt="Dijkstra's Shortest Path to Chai"> | **"Dijkstra's Shortest Path to Chai"**<br>`O(1) Energy` — Sunglasses, mountain trails, and finding the optimal chai spot. |
+| **Node #60** | <img src="Image-3.jpeg" width="160" alt="The Whiteboard Architect"> | **"The Whiteboard Architect"**<br>`O(log n) Master` — Faculty cabin discussions and deep algorithmic mastery. |
+| **Node #70** | <img src="Image-7.jpeg" width="160" alt="How To Join My Company As Engineer"> | **"How To Join My Company As Engineer"**<br>`O(E + V) Network` — Keynote slide announcing the leap from academia to startup builder. |
+| **Node #80** | <img src="Image-4.jpeg" width="160" alt="new Startup('Viomesh Ventures') — Founder & CEO"> | **"new Startup('Viomesh Ventures') — Founder & CEO"**<br>`Valuation -> ∞` — Suit and tie executive portrait leveling up to Founder & CEO. |
 
 ---
 
@@ -24,22 +41,9 @@ An interactive archival tribute and self-balancing AVL photo tree celebrating **
 
 ---
 
-## 📸 Pedagogical Photo Sequence
-
-1. **Node #10 (`Image-6.jpeg`)**: *"Beta Tujhe C Ka printf() Bhi Nahi Aata"* — Day 1 freshman reality check (`O(1) Reality Check`).
-2. **Node #20 (`Image-8.jpeg`)**: *"Recursion With Viomesh Sir"* — Whiteboard call stacks and base cases (`O(2^n) Call Stack`).
-3. **Node #30 (`Image-9.jpeg`)**: *"Any Doubts? Vaise Aate Toh Hai Nahi!"* — Classroom humor and interactive lectures (`O(0) Doubts`).
-4. **Node #40 (`Image-2.jpeg`)**: *"Job Is Available For EVERYONE!"* — High-energy placement drive mentorship (`O(n) Offers`).
-5. **Node #50 (`Image-1.jpeg`)**: *"Dijkstra's Shortest Path to Chai"* — Mountain trails, sunglasses, and high energy (`O(1) Energy`).
-6. **Node #60 (`Image-3.jpeg`)**: *"The Whiteboard Architect"* — Deep algorithmic mastery and faculty cabin mentorship (`O(log n) Master`).
-7. **Node #70 (`Image-7.jpeg`)**: *"How To Join My Company As Engineer"* — The auditorium keynote slide announcing the startup leap (`O(E + V) Network`).
-8. **Node #80 (`Image-4.jpeg`)**: *"new Startup('Viomesh Ventures') — Founder & CEO"* — Suit and tie executive portrait (`Valuation -> ∞`).
-
----
-
 ## 🚀 Getting Started
 
-Simply open `index.html` in any modern web browser:
+Simply open `index.html` in any modern web browser or visit the live link:
 ```bash
 # Clone the repository
 git clone https://github.com/thenamanvarshney/viomesh-sir-farewell.git

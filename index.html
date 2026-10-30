@@ -1086,8 +1086,10 @@ button{font:inherit;cursor:none;background:none;border:none;color:inherit}
     </div>
     
     <div class="intro-video-stage" id="intro-video-stage" title="Click to play / pause">
-      <video id="intro-video" playsinline preload="auto">
+      <video id="intro-video" playsinline preload="auto" src="intro-video.mp4">
+        <source src="intro-video.mp4" type="video/mp4">
         <source src="Intro%20Video.mp4" type="video/mp4">
+        <source src="Intro Video.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
       <div id="intro-tap-overlay" class="intro-tap-overlay hidden">
@@ -2805,22 +2807,33 @@ function initIntroVideo() {
   const playPromise = introVideo.play();
   if (playPromise !== undefined) {
     playPromise.then(() => {
-      // Unmuted autoplay succeeded immediately!
+      // Unmuted autoplay succeeded immediately with full audio!
       if (tapOverlay) tapOverlay.classList.add('hidden');
     }).catch(() => {
-      // Browser requires initial user interaction for sound: show prominent prompt
-      if (tapOverlay) tapOverlay.classList.remove('hidden');
+      // Browser autoplay policy restricted unmuted playback on fresh visit:
+      // Start muted playback IMMEDIATELY so the video is LIVE & VISIBLE (never a black screen!)
+      introVideo.muted = true;
+      introVideo.play().catch(() => {});
 
-      // Listen for the very first interaction anywhere to trigger full sound playback
-      const triggerPlay = () => {
-        startUnmutedPlayback();
-        window.removeEventListener('pointerdown', triggerPlay);
-        window.removeEventListener('click', triggerPlay);
-        window.removeEventListener('keydown', triggerPlay);
+      if (tapOverlay) {
+        tapOverlay.classList.remove('hidden');
+        const tapText = document.getElementById('intro-tap-text');
+        if (tapText) tapText.innerHTML = 'TAP ANYWHERE TO UNMUTE AUDIO 🔊';
+      }
+
+      // First click/touch anywhere instantly enables unmuted sound
+      const triggerUnmute = () => {
+        introVideo.muted = false;
+        introVideo.volume = 1.0;
+        introVideo.play().catch(() => {});
+        if (tapOverlay) tapOverlay.classList.add('hidden');
+        window.removeEventListener('pointerdown', triggerUnmute);
+        window.removeEventListener('click', triggerUnmute);
+        window.removeEventListener('keydown', triggerUnmute);
       };
-      window.addEventListener('pointerdown', triggerPlay, { once: true });
-      window.addEventListener('click', triggerPlay, { once: true });
-      window.addEventListener('keydown', triggerPlay, { once: true });
+      window.addEventListener('pointerdown', triggerUnmute, { once: true });
+      window.addEventListener('click', triggerUnmute, { once: true });
+      window.addEventListener('keydown', triggerUnmute, { once: true });
     });
   }
 
