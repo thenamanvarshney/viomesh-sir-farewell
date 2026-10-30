@@ -853,49 +853,24 @@ button{font:inherit;cursor:none;background:none;border:none;color:inherit}
   padding:8px 10px;font-family:'Inter Tight',sans-serif;font-size:12px;background:var(--paper);outline:none}
 #add-note-modal .anm-box .anm-actions{display:flex;gap:10px;justify-content:flex-end}
 
-/* ── INTRO VIDEO POPUP MODAL (MANUAL LAUNCH, UNMUTED AUDIO) ── */
+/* ── INTRO VIDEO POPUP MODAL (MAXIMIZED DISPLAY SPACE) ── */
 #intro-modal {
   position: fixed;
   inset: 0;
   z-index: 120;
-  display: none;
+  display: flex;
   align-items: center;
   justify-content: center;
   background: #000;
   padding: 0;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.65s var(--ease), filter 0.65s var(--ease), transform 0.65s var(--ease);
-}
-#intro-modal.open {
-  display: flex;
   opacity: 1;
-  pointer-events: auto;
+  transition: opacity 0.75s var(--ease), filter 0.75s var(--ease), transform 0.75s var(--ease);
 }
 #intro-modal.closing {
   opacity: 0;
   filter: blur(14px);
   transform: scale(1.04);
   pointer-events: none;
-}
-.intro-launch-btn {
-  background: rgba(31, 63, 176, 0.12) !important;
-  color: var(--cobalt) !important;
-  border: 1px solid var(--cobalt) !important;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9.5px !important;
-  letter-spacing: .12em !important;
-  font-weight: 700 !important;
-  transition: background 0.3s, color 0.3s, transform 0.2s;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.intro-launch-btn:hover {
-  background: var(--cobalt) !important;
-  color: #fff !important;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(31, 63, 176, 0.35);
 }
 .intro-card {
   background: #000;
@@ -1090,7 +1065,7 @@ button{font:inherit;cursor:none;background:none;border:none;color:inherit}
 <body>
 
 <!-- INTRO VIDEO POPUP MODAL (MAXIMIZED THEATER) -->
-<div id="intro-modal">
+<div id="intro-modal" class="open">
   <div class="intro-card">
     <div class="intro-header">
       <div class="intro-badge">
@@ -1159,7 +1134,6 @@ button{font:inherit;cursor:none;background:none;border:none;color:inherit}
     <div class="en">PROF. VIOMESH SINGH</div>
   </div>
   <div class="right-bar">
-    <button id="btn-launch-intro" class="lbl box intro-launch-btn" title="Watch Intro Video with Full Sound">🎬 WATCH INTRO FILM (SOUND ON 🔊)</button>
     <span class="status-badge">STATUS: O(1) TO FOUNDER 🚀</span>
     <a href="https://www.linkedin.com/in/viomeshsingh" target="_blank" rel="noopener noreferrer" class="lbl box">LINKEDIN ↗</a>
     <a href="https://www.instagram.com/viomeshsingh?srtk=NW1ya25xYWd3MGhi" target="_blank" rel="noopener noreferrer" class="lbl box">INSTAGRAM ↗</a>
@@ -1204,9 +1178,6 @@ button{font:inherit;cursor:none;background:none;border:none;color:inherit}
     </button>
     <button class="dock-btn" id="dock-auto-btn">
       <span class="dock-icon">⏵</span> AUTO-BUILD TREE
-    </button>
-    <button class="dock-btn" id="dock-intro-btn" title="Play Intro Film with Full Sound">
-      <span class="dock-icon">🎬</span> INTRO FILM (🔊)
     </button>
     <button class="dock-btn" id="dock-reset-btn" style="display:none;" title="Reset to 1 Node">
       ↺ RESET
@@ -2723,23 +2694,21 @@ function initIntroVideo() {
   const introModal = document.getElementById('intro-modal');
   const introVideo = document.getElementById('intro-video');
   const skipBtn = document.getElementById('intro-skip-btn');
+  const muteBtn = document.getElementById('intro-mute-btn');
+  const muteIcon = document.getElementById('intro-mute-icon');
   const tapOverlay = document.getElementById('intro-tap-overlay');
   const progressFill = document.getElementById('intro-progress-fill');
   const timeDisplay = document.getElementById('intro-time-display');
-  const launchBtns = [
-    document.getElementById('btn-launch-intro'),
-    document.getElementById('dock-intro-btn')
-  ].filter(Boolean);
 
   if (!introModal || !introVideo) return;
 
-  // STRICT REQUIREMENTS:
-  // 1. DO NOT launch automatically when opening the site.
-  // 2. Audio is ALWAYS UNMUTED (100% volume) when launched by user.
-  introModal.classList.remove('open');
+  // Ensure intro modal is visible on every page visit or reload
+  introModal.classList.add('open');
   introModal.classList.remove('closing');
-  introModal.style.display = 'none';
-  introDismissed = true;
+  introModal.style.display = 'flex';
+  introDismissed = false;
+
+  // STRICT REQUIREMENT: Intro video is ALWAYS UNMUTED
   introVideo.muted = false;
   introVideo.volume = 1.0;
 
@@ -2750,35 +2719,11 @@ function initIntroVideo() {
     return `${m}:${s < 10 ? '0' : ''}${s}`;
   }
 
-  function openIntroModal() {
-    introDismissed = false;
-    introModal.style.display = 'flex';
-    // Force browser reflow for clean transition
-    introModal.offsetHeight;
-    introModal.classList.remove('closing');
-    introModal.classList.add('open');
-
-    // Strict requirement: Always start UNMUTED with full volume
-    introVideo.currentTime = 0;
-    introVideo.muted = false;
-    introVideo.volume = 1.0;
-
-    const p = introVideo.play();
-    if (p !== undefined) {
-      p.then(() => {
-        if (tapOverlay) tapOverlay.classList.add('hidden');
-      }).catch(() => {
-        // Fallback only if browser demands direct video element touch
-        if (tapOverlay) tapOverlay.classList.remove('hidden');
-      });
-    }
-  }
-
-  function closeIntroModal() {
+  function transitionToSite() {
     if (introDismissed) return;
     introDismissed = true;
 
-    // Fade out audio gracefully
+    // Fade out audio gracefully if playing
     try {
       const fadeInterval = setInterval(() => {
         if (introVideo.volume > 0.15) {
@@ -2787,35 +2732,29 @@ function initIntroVideo() {
           clearInterval(fadeInterval);
           introVideo.pause();
         }
-      }, 35);
+      }, 40);
     } catch (_) {
       introVideo.pause();
     }
 
+    // Trigger smooth fade & scale exit transition to original site
     introModal.classList.add('closing');
+
     setTimeout(() => {
       introModal.classList.remove('open');
       introModal.style.display = 'none';
       introVideo.pause();
-      introVideo.currentTime = 0;
-      introVideo.muted = false;
-      introVideo.volume = 1.0;
-    }, 650);
+
+      // Show welcome notification on the original site
+      showRebalanceToast("WELCOME TO PROF. VIOMESH SINGH'S TRIBUTE ARCHIVE 🚀");
+    }, 700);
   }
 
-  // Connect launch buttons from Topbar and Control Dock
-  launchBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      openIntroModal();
-    });
-  });
-
-  // Skip / Enter site button in the video modal
+  // Skip / Enter site button
   if (skipBtn) {
     skipBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      closeIntroModal();
+      transitionToSite();
     });
   }
 
@@ -2830,30 +2769,76 @@ function initIntroVideo() {
     }
   });
 
-  // Automatically close when video finishes playing
+  // Automatically transition to original site when video finishes playing!
   introVideo.addEventListener('ended', () => {
-    closeIntroModal();
+    transitionToSite();
   });
 
-  // Clicking on the video stage to play/pause with UNMUTED audio
+  function startUnmutedPlayback() {
+    introVideo.muted = false;
+    introVideo.volume = 1.0;
+    const p = introVideo.play();
+    if (p !== undefined) {
+      p.then(() => {
+        if (tapOverlay) tapOverlay.classList.add('hidden');
+      }).catch(() => {
+        if (tapOverlay) tapOverlay.classList.remove('hidden');
+      });
+    }
+  }
+
+  // Clicking on the video stage to play/pause with unmuted audio
   const videoStage = document.getElementById('intro-video-stage') || document.querySelector('.intro-video-stage');
   if (videoStage) {
-    videoStage.addEventListener('click', (e) => {
-      if (e.target.closest('#intro-skip-btn')) return;
-      introVideo.muted = false;
-      introVideo.volume = 1.0;
+    videoStage.addEventListener('click', () => {
       if (introVideo.paused) {
-        introVideo.play();
-        if (tapOverlay) tapOverlay.classList.add('hidden');
+        startUnmutedPlayback();
       } else {
         introVideo.pause();
       }
     });
   }
 
-  // Expose transition functions for keyboard navigation
-  window.openIntroVideo = openIntroModal;
-  window.dismissIntroModal = closeIntroModal;
+  // Attempt unmuted autoplay immediately on page load
+  introVideo.currentTime = 0;
+  introVideo.muted = false;
+  introVideo.volume = 1.0;
+
+  const playPromise = introVideo.play();
+  if (playPromise !== undefined) {
+    playPromise.then(() => {
+      // Unmuted autoplay succeeded immediately with full audio!
+      if (tapOverlay) tapOverlay.classList.add('hidden');
+    }).catch(() => {
+      // Browser autoplay policy restricted unmuted playback on fresh visit:
+      // Start muted playback IMMEDIATELY so the video is LIVE & VISIBLE (never a black screen!)
+      introVideo.muted = true;
+      introVideo.play().catch(() => {});
+
+      if (tapOverlay) {
+        tapOverlay.classList.remove('hidden');
+        const tapText = document.getElementById('intro-tap-text');
+        if (tapText) tapText.innerHTML = 'TAP ANYWHERE TO UNMUTE AUDIO 🔊';
+      }
+
+      // First click/touch anywhere instantly enables unmuted sound
+      const triggerUnmute = () => {
+        introVideo.muted = false;
+        introVideo.volume = 1.0;
+        introVideo.play().catch(() => {});
+        if (tapOverlay) tapOverlay.classList.add('hidden');
+        window.removeEventListener('pointerdown', triggerUnmute);
+        window.removeEventListener('click', triggerUnmute);
+        window.removeEventListener('keydown', triggerUnmute);
+      };
+      window.addEventListener('pointerdown', triggerUnmute, { once: true });
+      window.addEventListener('click', triggerUnmute, { once: true });
+      window.addEventListener('keydown', triggerUnmute, { once: true });
+    });
+  }
+
+  // Expose transition function for keyboard listener
+  window.dismissIntroModal = transitionToSite;
 }
 
 /* ═══════════════════════════════════════════════════════
