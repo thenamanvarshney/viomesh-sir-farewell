@@ -1,0 +1,2876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Prof. Viomesh Singh — O(1) To Founder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600&family=JetBrains+Mono:wght@400;600&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Noto+Sans+JP:wght@500&family=Noto+Serif+SC:wght@700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --paper:#EDEBE6;--sheet:#F4F2ED;--ink:#141414;--muted:#6D6A63;
+  --cobalt:#1F3FB0;--emerald:#137333;--vermilion:#D9381E;--gold:#D4AF37;
+  --rule:rgba(20,20,20,.9);--ease:cubic-bezier(.2,.8,.2,1);
+}
+html,body{height:100%;overflow:hidden;background:var(--paper);color:var(--ink);
+  font-family:'Inter Tight',sans-serif;font-weight:500;-webkit-font-smoothing:antialiased;cursor:none}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:none;background:none;border:none;color:inherit}
+
+/* ── PAPER GRAIN ── */
+#grain{position:fixed;inset:0;z-index:40;pointer-events:none;mix-blend-mode:multiply;opacity:.55}
+
+/* ── CUSTOM CURSOR ── */
+#cursor-ring{position:fixed;z-index:150;pointer-events:none;width:58px;height:58px;
+  border:1.5px solid var(--ink);border-radius:50%;transform:translate(-50%,-50%) scale(1);
+  transition:width .35s var(--ease),height .35s var(--ease),background .3s,border-color .3s;
+  display:flex;align-items:center;justify-content:center;font-size:8px;letter-spacing:.12em;
+  font-family:'Inter Tight',sans-serif;font-weight:600;color:transparent}
+#cursor-ring.shrink{transform:translate(-50%,-50%) scale(.72)}
+#cursor-ring.btn-hover{transform:translate(-50%,-50%) scale(.55)}
+#cursor-ring.open-mode{transform:translate(-50%,-50%) scale(1.75);
+  background:var(--cobalt);border-color:var(--cobalt);color:#fff;font-size:7.5px}
+@media(max-width:767px){#cursor-ring{display:none}html,body{cursor:auto}}
+
+/* ── TOP BAR ── */
+#topbar{position:fixed;top:0;left:0;right:0;height:84px;z-index:30;
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  padding:0 clamp(16px,2.5vw,40px);background:var(--paper);
+  border-bottom:1px solid var(--rule)}
+#topbar .mode-switch{display:flex;border:1px solid var(--rule);position:relative}
+#topbar .mode-switch button{padding:10px 18px;font-size:9.5px;letter-spacing:.22em;
+  font-weight:600;white-space:nowrap;position:relative;z-index:1;transition:color .4s var(--ease)}
+#topbar .mode-switch button.active{color:#fff}
+#topbar .mode-switch .indicator{position:absolute;top:0;bottom:0;
+  background:var(--cobalt);transition:left .6s var(--ease),width .6s var(--ease);z-index:0}
+#topbar .logo{text-align:center}
+#topbar .logo .jp{font-family:'Noto Serif SC','Noto Sans JP',serif;font-weight:700;
+  font-size:20px;color:var(--cobalt);line-height:1.3}
+#topbar .logo .en{font-size:9.5px;letter-spacing:.34em;font-weight:600;line-height:1.6}
+#topbar .right-bar{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+#topbar .status-badge{font-size:9px;letter-spacing:.18em;font-weight:600;color:var(--cobalt);white-space:nowrap}
+.lbl.box{display:inline-flex;align-items:center;border:1px solid var(--rule);
+  padding:7px 14px;font-size:9px;letter-spacing:.18em;font-weight:600;white-space:nowrap;
+  transition:background .3s,color .3s}
+.lbl.box:hover{background:var(--ink);color:var(--paper)}
+
+/* ── VIEW CONTAINERS ── */
+#archive-view,#leetcode-view{position:fixed;top:84px;left:0;right:0;bottom:0}
+#archive-view{z-index:10;display:flex;flex-direction:column;background:var(--paper);overflow:hidden}
+#leetcode-view{z-index:9;clip-path:inset(100% 0 0 0);transition:clip-path .75s var(--ease);
+  display:grid;grid-template-columns:46% 54%;background:var(--paper);overflow:hidden}
+#leetcode-view.open{clip-path:inset(0 0 0 0);z-index:11}
+
+/* ═══════════════════════════════════════════════════════
+   PAGE 1: STEP-BY-STEP SELF-BALANCING AVL PHOTO TREE STYLES
+   ═══════════════════════════════════════════════════════ */
+
+/* ── TOP STATUS PILL ── */
+#avl-top-status {
+  position: absolute;
+  top: 96px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  pointer-events: none;
+}
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: rgba(244, 242, 237, 0.95);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--rule);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: .08em;
+  color: var(--ink);
+  box-shadow: 0 4px 16px rgba(20,20,20,0.06);
+}
+.sp-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--cobalt);
+  box-shadow: 0 0 6px var(--cobalt);
+  animation: pulse-dot 1.8s infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* ── FLOATING REBALANCE TOAST BANNER ── */
+#avl-rebalance-toast {
+  position: absolute;
+  top: 138px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-10px);
+  z-index: 25;
+  background: var(--cobalt);
+  color: #fff;
+  border: 1px solid var(--cobalt);
+  padding: 8px 18px;
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: .12em;
+  font-weight: 600;
+  box-shadow: 0 8px 24px rgba(31,63,176,0.3);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s var(--ease), transform 0.35s var(--ease), background 0.35s, border-color 0.35s, box-shadow 0.35s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#avl-rebalance-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+#avl-rebalance-toast.imbalance-warning {
+  background: var(--vermilion);
+  border-color: var(--vermilion);
+  box-shadow: 0 8px 24px rgba(217,56,30,0.4);
+}
+#avl-rebalance-toast .toast-bolt {
+  color: var(--gold);
+  font-size: 13px;
+}
+
+/* ── AVL VIEWPORT & WORLD (PAN & ZOOM STAGE) ── */
+#avl-viewport {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  cursor: grab;
+  background: var(--paper);
+  user-select: none;
+  touch-action: none;
+}
+#avl-viewport.grabbing {
+  cursor: grabbing;
+}
+#avl-world {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+#avl-edges-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 16000px;
+  height: 16000px;
+  pointer-events: none;
+  overflow: visible;
+}
+#avl-edges-svg path.avl-edge {
+  fill: none;
+  stroke: var(--rule);
+  stroke-width: 2;
+  stroke-linecap: round;
+  transition: stroke .35s var(--ease), stroke-width .35s var(--ease), opacity .35s var(--ease);
+}
+#avl-edges-svg path.avl-edge.new-edge {
+  stroke: var(--cobalt);
+  stroke-width: 3.2;
+  animation: edge-pulse-blue 1.2s ease-in-out infinite alternate;
+}
+#avl-edges-svg path.avl-edge.rotating-edge {
+  stroke: var(--cobalt);
+  stroke-width: 3.4;
+  filter: drop-shadow(0 0 8px rgba(31,63,176,0.7));
+}
+@keyframes edge-pulse-blue {
+  from { stroke-width: 2.2; filter: drop-shadow(0 0 2px rgba(31,63,176,0.3)); }
+  to { stroke-width: 3.2; filter: drop-shadow(0 0 8px rgba(31,63,176,0.8)); }
+}
+#avl-nodes-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 16000px;
+  height: 16000px;
+  pointer-events: none;
+}
+
+/* ── UPGRADED ARCHIVAL PHOTO CARD (AVL NODE) ── */
+.avl-node-card {
+  position: absolute;
+  width: 216px;
+  height: 260px;
+  background: var(--sheet);
+  border: 1px solid var(--rule);
+  box-shadow: 0 16px 36px -16px rgba(20, 16, 10, 0.42);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  cursor: none;
+  pointer-events: auto;
+  user-select: none;
+  will-change: transform;
+  transition: box-shadow .3s, border-color .3s, opacity .35s var(--ease), scale .35s var(--ease);
+}
+.avl-node-card:hover {
+  border-color: var(--cobalt);
+  box-shadow: 0 24px 48px -16px rgba(31, 63, 176, 0.35);
+  z-index: 50;
+}
+.avl-node-card.root-card {
+  border-top: 3px solid var(--cobalt);
+}
+.avl-node-card.new-node {
+  border-color: var(--cobalt);
+  box-shadow: 0 0 0 2.5px var(--cobalt), 0 20px 40px -16px rgba(31, 63, 176, 0.4);
+  animation: pop-new-card 0.55s var(--ease);
+}
+@keyframes pop-new-card {
+  0% { scale: 0.85; opacity: 0; }
+  65% { scale: 1.04; opacity: 1; }
+  100% { scale: 1; opacity: 1; }
+}
+.avl-node-card.imbalance-flash {
+  border-color: var(--vermilion);
+  box-shadow: 0 0 0 3px var(--vermilion), 0 20px 40px -16px rgba(217, 56, 30, 0.48);
+  animation: pulse-imbalance 0.55s infinite alternate ease-in-out;
+}
+@keyframes pulse-imbalance {
+  from { scale: 1; }
+  to { scale: 1.035; }
+}
+.avl-node-card.removing {
+  opacity: 0 !important;
+  scale: 0.75 !important;
+  pointer-events: none;
+}
+
+/* Card Header Strip */
+.card-header-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+}
+.card-key-tag {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 2px 6px;
+  color: var(--cobalt);
+  letter-spacing: .06em;
+}
+.card-bf-tag {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 2px 6px;
+  color: var(--ink);
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+.card-bf-tag.imbalanced {
+  background: var(--vermilion);
+  color: #fff;
+  border-color: var(--vermilion);
+  font-weight: 700;
+}
+
+/* Center Photo Frame */
+.card-photo-frame {
+  width: 100%;
+  height: 154px;
+  position: relative;
+  background: var(--paper);
+  border: 1px solid rgba(20,20,20,0.18);
+  overflow: hidden;
+  display: flex;
+}
+.card-photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+  transition: transform 0.35s var(--ease);
+}
+.avl-node-card:hover .card-photo-img {
+  transform: scale(1.03);
+}
+.card-photo-overlay {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  pointer-events: none;
+  display: flex;
+  justify-content: flex-end;
+}
+.card-photo-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 7.5px;
+  color: #fff;
+  letter-spacing: .06em;
+  background: rgba(20, 20, 20, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 1px 5px;
+  border-radius: 2px;
+  backdrop-filter: blur(4px);
+}
+
+/* Bottom Caption Area */
+.card-caption {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 6px;
+  gap: 2px;
+}
+.card-title {
+  font-family: 'Newsreader', serif;
+  font-size: 13.5px;
+  line-height: 1.25;
+  color: var(--ink);
+  font-weight: 400;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.card-complexity {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 10px;
+  color: var(--muted);
+  font-weight: 500;
+  letter-spacing: .04em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── SLEEK ARCHIVAL CONTROL DOCK (BOTTOM-CENTER) ── */
+#avl-control-dock {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 35;
+  background: var(--sheet);
+  border: 1px solid var(--rule);
+  box-shadow: 0 10px 32px rgba(20,20,20,0.14);
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: min(92vw, 920px);
+}
+.dock-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--rule);
+  padding: 8px 14px;
+  font-size: 9.5px;
+  letter-spacing: .16em;
+  font-weight: 600;
+  white-space: nowrap;
+  background: var(--sheet);
+  color: var(--ink);
+  transition: background 0.3s, color 0.3s, border-color 0.3s, opacity 0.3s;
+}
+.dock-btn:hover:not(:disabled) {
+  background: var(--ink);
+  color: var(--paper);
+}
+.dock-btn:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+.dock-btn.primary {
+  background: var(--cobalt);
+  color: #fff;
+  border-color: var(--cobalt);
+}
+.dock-btn.primary:hover:not(:disabled) {
+  filter: brightness(1.15);
+  background: var(--cobalt);
+  color: #fff;
+}
+.dock-btn.launch-ide {
+  background: linear-gradient(135deg, var(--cobalt) 0%, #137333 100%);
+  color: #fff;
+  border-color: var(--cobalt);
+  box-shadow: 0 0 12px rgba(31,63,176,0.35);
+}
+.dock-readout {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 220px;
+  max-width: 320px;
+  border-left: 1px solid rgba(20,20,20,0.2);
+  border-right: 1px solid rgba(20,20,20,0.2);
+  padding: 0 14px;
+}
+.dock-step-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--cobalt);
+  letter-spacing: .08em;
+}
+.dock-log {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 10px;
+  color: var(--ink);
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 2px;
+}
+@media (max-width: 768px) {
+  #avl-control-dock {
+    flex-wrap: wrap;
+    justify-content: center;
+    bottom: 12px;
+    padding: 6px 10px;
+    gap: 6px;
+  }
+  .dock-readout {
+    order: -1;
+    width: 100%;
+    max-width: 100%;
+    border: none;
+    text-align: center;
+    padding: 0 0 4px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   PAGE 2: LEETCODE VIEW (FULL SCROLLABLE ARCHIVAL IDE)
+   ═══════════════════════════════════════════════════════ */
+.lc-left{
+  background:var(--sheet);
+  border-right:1px solid var(--rule);
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  height:100%;
+  padding:clamp(20px,2.5vw,40px);
+}
+.lc-left h2{
+  font-family:'Inter Tight',sans-serif;
+  font-weight:600;
+  font-size:clamp(16px,1.8vw,22px);
+  margin-bottom:4px;
+}
+.lc-left .diff-badge{
+  display:inline-block;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  letter-spacing:.1em;
+  color:var(--vermilion);
+  border:1px solid var(--vermilion);
+  padding:2px 8px;
+  margin-left:8px;
+  vertical-align:middle;
+}
+.lc-left .accepted-badge{
+  display:inline-block;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  letter-spacing:.1em;
+  color:var(--emerald);
+  border:1px solid var(--emerald);
+  padding:2px 8px;
+  margin-left:6px;
+  vertical-align:middle;
+}
+.lc-left .problem-text{
+  font-family:'Newsreader',serif;
+  font-size:clamp(13px,1.3vw,16px);
+  line-height:1.75;
+  margin:18px 0;
+  color:var(--ink);
+}
+.lc-left .problem-text em{
+  color:var(--muted);
+}
+.lc-left .example-block{
+  background:var(--paper);
+  border:1px solid var(--rule);
+  padding:14px 18px;
+  margin:12px 0;
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  line-height:1.7;
+}
+.lc-left .example-block strong{
+  font-weight:600;
+}
+.lc-left .constraints-box{
+  border:1px solid var(--rule);
+  padding:14px 18px;
+  margin:16px 0;
+}
+.lc-left .constraints-box p{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11.5px;
+  line-height:1.8;
+  color:var(--ink);
+}
+.lc-left .connect-links{
+  display:flex;
+  gap:10px;
+  margin-top:20px;
+  flex-wrap:wrap;
+}
+
+.lc-right{
+  display:flex;
+  flex-direction:column;
+  background:var(--paper);
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  height:100%;
+  padding-bottom:28px;
+}
+.lc-right .editor-tabs{
+  display:flex;
+  border-bottom:1px solid var(--rule);
+  padding:0;
+  flex-shrink:0;
+  background:var(--paper);
+  position:sticky;
+  top:0;
+  z-index:4;
+}
+.lc-right .editor-tabs button{
+  padding:10px 18px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  border-bottom:2px solid transparent;
+  transition:border-color .3s;
+}
+.lc-right .editor-tabs button.active{
+  border-bottom-color:var(--cobalt);
+}
+.lc-right .code-editor{
+  flex-shrink:0;
+  min-height:360px;
+  background:var(--sheet);
+  padding:16px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:13px;
+  line-height:1.7;
+  white-space:pre-wrap;
+  outline:none;
+  border:none;
+  tab-size:2;
+  color:var(--ink);
+}
+.lc-right .editor-line{
+  display:flex;
+}
+.lc-right .line-num{
+  color:var(--muted);
+  min-width:36px;
+  text-align:right;
+  padding-right:12px;
+  user-select:none;
+  font-size:12px;
+}
+.lc-right .line-code{
+  flex:1;
+  white-space:pre-wrap;
+}
+
+.lc-right .console-area{
+  flex-shrink:0;
+  border-top:1px solid var(--rule);
+  padding:12px 16px;
+  min-height:140px;
+  max-height:280px;
+  overflow-y:auto;
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  line-height:1.6;
+  background:var(--paper);
+}
+.lc-right .action-bar{
+  flex-shrink:0;
+  display:flex;
+  gap:10px;
+  padding:12px 16px;
+  border-top:1px solid var(--rule);
+  justify-content:flex-end;
+  align-items:center;
+  background:var(--paper);
+  position:sticky;
+  bottom:0;
+  z-index:5;
+}
+.lc-right .action-bar .run-btn{
+  border:1px solid var(--ink);
+  padding:8px 20px;
+  font-size:10px;
+  letter-spacing:.16em;
+  font-weight:600;
+  transition:background .3s,color .3s;
+}
+.lc-right .action-bar .run-btn:hover{
+  background:var(--ink);
+  color:var(--paper);
+}
+.lc-right .action-bar .submit-btn{
+  background:var(--cobalt);
+  color:#fff;
+  padding:8px 20px;
+  font-size:10px;
+  letter-spacing:.16em;
+  font-weight:600;
+  border:1px solid var(--cobalt);
+  transition:filter .3s;
+}
+.lc-right .action-bar .submit-btn:hover{
+  filter:brightness(1.15);
+}
+
+/* Responsive stacked layout */
+@media(max-width:960px){
+  #leetcode-view{
+    display:block;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    height:calc(100vh - 84px);
+  }
+  .lc-left{
+    height:auto;
+    border-right:none;
+    border-bottom:1px solid var(--rule);
+    overflow-y:visible;
+  }
+  .lc-right{
+    height:auto;
+    overflow-y:visible;
+  }
+  .lc-right .action-bar{
+    position:static;
+  }
+}
+
+/* Custom scrollbars */
+.lc-left::-webkit-scrollbar,
+.lc-right::-webkit-scrollbar,
+#leetcode-view::-webkit-scrollbar,
+.console-area::-webkit-scrollbar,
+#detail::-webkit-scrollbar,
+#results-modal::-webkit-scrollbar{
+  width:6px;
+  height:6px;
+}
+.lc-left::-webkit-scrollbar-track,
+.lc-right::-webkit-scrollbar-track,
+#leetcode-view::-webkit-scrollbar-track,
+.console-area::-webkit-scrollbar-track,
+#detail::-webkit-scrollbar-track,
+#results-modal::-webkit-scrollbar-track{
+  background:var(--paper);
+}
+.lc-left::-webkit-scrollbar-thumb,
+.lc-right::-webkit-scrollbar-thumb,
+#leetcode-view::-webkit-scrollbar-thumb,
+.console-area::-webkit-scrollbar-thumb,
+#detail::-webkit-scrollbar-thumb,
+#results-modal::-webkit-scrollbar-thumb{
+  background:rgba(20,20,20,0.25);
+  border-radius:3px;
+}
+.lc-left::-webkit-scrollbar-thumb:hover,
+.lc-right::-webkit-scrollbar-thumb:hover,
+#leetcode-view::-webkit-scrollbar-thumb:hover,
+.console-area::-webkit-scrollbar-thumb:hover,
+#detail::-webkit-scrollbar-thumb:hover,
+#results-modal::-webkit-scrollbar-thumb:hover{
+  background:var(--cobalt);
+}
+
+/* ── DETAIL OVERLAY (EXPANDED MEMORY SHEET) ── */
+#detail{position:fixed;inset:0;z-index:25;background:var(--sheet);
+  display:none;overflow-y:auto;padding:clamp(24px,4vw,60px)}
+#detail.open{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,3vw,48px);
+  align-content:start}
+@media(max-width:767px){#detail.open{grid-template-columns:1fr}}
+#detail .detail-left{display:flex;flex-direction:column;gap:16px;justify-content:center}
+#detail .detail-left .node-tag{font-family:'JetBrains Mono',monospace;font-size:11px;
+  color:var(--cobalt);letter-spacing:.14em;font-weight:600}
+#detail .detail-left .mem-title{font-family:'Newsreader',serif;font-weight:400;
+  font-size:clamp(32px,4.8vw,72px);line-height:1.12}
+#detail .detail-left .meta-badges{display:flex;gap:8px;flex-wrap:wrap}
+#detail .detail-left .meta-badges span{font-family:'JetBrains Mono',monospace;
+  font-size:9px;letter-spacing:.12em;border:1px solid var(--rule);padding:4px 10px}
+#detail .detail-left .quote-text{font-family:'Newsreader',serif;font-style:italic;
+  font-size:clamp(14px,1.6vw,19px);line-height:1.65;color:var(--ink);max-width:560px}
+#detail .detail-left .credit{font-family:'Newsreader',serif;font-style:italic;
+  font-size:12px;color:var(--muted);line-height:1.5}
+#detail .detail-left .detail-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+#detail .detail-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.detail-photo-stage {
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.detail-photo-wrapper {
+  position: relative;
+  width: 100%;
+  height: clamp(400px, 72vh, 740px);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  box-shadow: 0 20px 50px -12px rgba(20, 20, 20, 0.35);
+  overflow: hidden;
+  display: flex;
+}
+.detail-full-img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+  transition: transform 0.4s var(--ease), object-fit 0.3s var(--ease);
+}
+.detail-photo-wrapper:hover .detail-full-img {
+  transform: scale(1.015);
+}
+.detail-photo-badge-bar {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(18, 18, 18, 0.88);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 6px 14px;
+  border-radius: 3px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+.detail-photo-badge-bar .dp-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .08em;
+  font-weight: 600;
+}
+.detail-photo-badge-bar .dp-tag.key {
+  color: #fff;
+  border-right: 1px solid rgba(255, 255, 255, 0.25);
+  padding-right: 8px;
+}
+.detail-photo-badge-bar .dp-tag.comp {
+  color: #90caf9;
+}
+.detail-photo-badge-bar .dp-tag.status {
+  font-size: 8.5px;
+  color: rgba(255, 255, 255, 0.65);
+  border-left: 1px solid rgba(255, 255, 255, 0.25);
+  padding-left: 8px;
+}
+#detail .close-detail{position:fixed;top:96px;right:clamp(16px,2.5vw,40px);
+  z-index:26;font-size:9px;letter-spacing:.18em;font-weight:600;
+  border:1px solid var(--rule);padding:8px 16px;background:var(--sheet)}
+#detail .close-detail:hover{background:var(--ink);color:var(--paper)}
+
+/* ── TEST CASE RESULTS ── */
+.test-case{display:flex;align-items:center;gap:10px;padding:4px 0}
+.test-case .tc-status{font-weight:600;min-width:60px}
+.test-case .tc-status.pass{color:var(--emerald)}
+.test-case .tc-status.pending{color:var(--muted)}
+.test-case .tc-name{color:var(--ink)}
+.test-case .tc-time{color:var(--muted);margin-left:auto}
+
+/* ── SUBMIT RESULTS MODAL ── */
+#results-modal{position:fixed;inset:0;z-index:35;background:rgba(237,235,230,.97);
+  display:none;overflow-y:auto;padding:clamp(24px,4vw,60px);
+  flex-direction:column;align-items:center;justify-content:flex-start;gap:24px}
+#results-modal.open{display:flex}
+#results-modal .result-header{text-align:center}
+#results-modal .result-header h2{font-family:'Newsreader',serif;font-size:clamp(28px,4vw,52px);
+  color:var(--emerald);font-weight:400}
+#results-modal .result-header p{font-family:'JetBrains Mono',monospace;font-size:12px;
+  color:var(--cobalt);letter-spacing:.1em;margin-top:6px}
+#results-modal .histogram{width:min(600px,90vw);height:180px;margin:12px auto}
+#results-modal .farewell-wall{width:min(800px,94vw);display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:16px}
+#results-modal .farewell-card{border:1px solid var(--rule);padding:16px;background:var(--sheet)}
+#results-modal .farewell-card .fc-name{font-weight:600;font-size:12px;letter-spacing:.1em}
+#results-modal .farewell-card .fc-msg{font-family:'Newsreader',serif;font-style:italic;
+  font-size:13px;line-height:1.55;margin-top:6px;color:var(--ink)}
+#results-modal .farewell-card .fc-batch{font-size:10px;color:var(--muted);margin-top:6px;letter-spacing:.08em}
+#results-modal .close-results{position:fixed;top:96px;right:clamp(16px,2.5vw,40px);
+  z-index:36;font-size:9px;letter-spacing:.18em;font-weight:600;
+  border:1px solid var(--rule);padding:8px 16px;background:var(--sheet)}
+#results-modal .close-results:hover{background:var(--ink);color:var(--paper)}
+#results-modal .add-note-area{width:min(600px,90vw);margin-top:12px;
+  display:flex;flex-direction:column;gap:8px;align-items:center}
+#results-modal .add-note-area textarea{width:100%;height:60px;border:1px solid var(--rule);
+  padding:10px;font-family:'Newsreader',serif;font-size:13px;background:var(--sheet);
+  resize:vertical;outline:none}
+#results-modal .add-note-area input{width:100%;border:1px solid var(--rule);
+  padding:8px 10px;font-family:'Inter Tight',sans-serif;font-size:12px;background:var(--sheet);outline:none}
+
+/* ── CONFETTI CANVAS ── */
+#confetti-canvas{position:fixed;inset:0;z-index:45;pointer-events:none}
+
+/* ── ADD NOTE MODAL IN DETAIL ── */
+#add-note-modal{position:fixed;inset:0;z-index:28;background:rgba(237,235,230,.95);
+  display:none;align-items:center;justify-content:center}
+#add-note-modal.open{display:flex}
+#add-note-modal .anm-box{background:var(--sheet);border:1px solid var(--rule);
+  padding:32px;max-width:440px;width:90%;display:flex;flex-direction:column;gap:12px}
+#add-note-modal .anm-box h3{font-size:14px;letter-spacing:.14em;font-weight:600}
+#add-note-modal .anm-box textarea{width:100%;height:80px;border:1px solid var(--rule);
+  padding:10px;font-family:'Newsreader',serif;font-size:13px;background:var(--paper);
+  resize:vertical;outline:none}
+#add-note-modal .anm-box input{width:100%;border:1px solid var(--rule);
+  padding:8px 10px;font-family:'Inter Tight',sans-serif;font-size:12px;background:var(--paper);outline:none}
+#add-note-modal .anm-box .anm-actions{display:flex;gap:10px;justify-content:flex-end}
+
+/* ── INTRO VIDEO POPUP MODAL (MAXIMIZED DISPLAY SPACE) ── */
+#intro-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  padding: 0;
+  opacity: 1;
+  transition: opacity 0.75s var(--ease), filter 0.75s var(--ease), transform 0.75s var(--ease);
+}
+#intro-modal.closing {
+  opacity: 0;
+  filter: blur(14px);
+  transform: scale(1.04);
+  pointer-events: none;
+}
+.intro-card {
+  background: #000;
+  border: none;
+  box-shadow: none;
+  width: 100vw;
+  height: 100vh;
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  animation: intro-card-appear 0.65s var(--ease);
+}
+@keyframes intro-card-appear {
+  0% { opacity: 0; transform: scale(0.96); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.intro-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(14px, 2.5vh, 24px) clamp(18px, 3vw, 40px);
+  background: linear-gradient(180deg, rgba(8, 8, 8, 0.88) 0%, rgba(8, 8, 8, 0.5) 60%, rgba(8, 8, 8, 0) 100%);
+  border-bottom: none;
+  gap: 12px;
+  flex-wrap: wrap;
+  pointer-events: auto;
+}
+.intro-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .12em;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(31, 63, 176, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 4px 12px;
+  border-radius: 14px;
+}
+.intro-badge .sp-dot {
+  background: #fff;
+  box-shadow: 0 0 8px #fff;
+}
+.intro-title-wrap {
+  text-align: center;
+  font-family: 'Inter Tight', sans-serif;
+  font-weight: 600;
+  font-size: 11.5px;
+  letter-spacing: .22em;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+}
+.intro-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.intro-ctrl-btn {
+  padding: 8px 16px !important;
+  font-size: 9.5px !important;
+  letter-spacing: .15em !important;
+  border-radius: 2px;
+}
+.intro-ctrl-btn.sound-badge {
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  backdrop-filter: blur(8px);
+}
+.intro-ctrl-btn.primary {
+  background: var(--cobalt) !important;
+  color: #fff !important;
+  border-color: var(--cobalt) !important;
+  box-shadow: 0 4px 18px rgba(31, 63, 176, 0.5);
+}
+.intro-ctrl-btn.primary:hover {
+  background: #2a52df !important;
+  border-color: #2a52df !important;
+  color: #fff !important;
+}
+.intro-video-stage {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  z-index: 10;
+}
+.intro-video-stage video {
+  width: 100%;
+  height: 100%;
+  max-width: 100vw;
+  max-height: 100vh;
+  object-fit: contain;
+  display: block;
+  background: #000;
+}
+.intro-tap-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 25;
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+}
+.intro-tap-overlay.hidden {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.9);
+  pointer-events: none;
+}
+.intro-tap-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(31, 63, 176, 0.96);
+  color: #fff;
+  padding: 14px 28px;
+  border-radius: 30px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  letter-spacing: .14em;
+  font-weight: 600;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.8), 0 0 20px rgba(31, 63, 176, 0.6);
+  animation: pulse-tap-pill 2s infinite ease-in-out;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+@keyframes pulse-tap-pill {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.06); opacity: 0.92; }
+}
+.intro-progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.22);
+  z-index: 35;
+}
+.intro-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--cobalt);
+  box-shadow: 0 0 10px var(--cobalt);
+  transition: width 0.1s linear;
+}
+.intro-footer {
+  position: absolute;
+  bottom: 4px;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(12px, 2vh, 20px) clamp(18px, 3vw, 40px);
+  background: linear-gradient(0deg, rgba(8, 8, 8, 0.88) 0%, rgba(8, 8, 8, 0.5) 60%, rgba(8, 8, 8, 0) 100%);
+  border-top: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .1em;
+  color: rgba(255, 255, 255, 0.7);
+  gap: 12px;
+  flex-wrap: wrap;
+  pointer-events: none;
+}
+.intro-footer > * {
+  pointer-events: auto;
+}
+
+/* ── REDUCED MOTION ── */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:0.01ms!important;animation-duration:0.01ms!important}
+}
+</style>
+</head>
+<body>
+
+<!-- INTRO VIDEO POPUP MODAL (MAXIMIZED THEATER) -->
+<div id="intro-modal" class="open">
+  <div class="intro-card">
+    <div class="intro-header">
+      <div class="intro-badge">
+        <span class="sp-dot"></span>
+        <span>ARCHIVAL FILM / 序章映像</span>
+      </div>
+      <div class="intro-title-wrap">
+        <span class="intro-title">PROF. VIOMESH SINGH — INTRO FILM</span>
+      </div>
+      <div class="intro-actions">
+        <span class="lbl box intro-ctrl-btn sound-badge" id="intro-sound-badge">
+          <span class="sound-wave">🔊</span> AUDIO ON (UNMUTED)
+        </span>
+        <button id="intro-skip-btn" class="lbl box intro-ctrl-btn primary" title="Enter Site">
+          <span>ENTER SITE ↗ / スキップ</span>
+        </button>
+      </div>
+    </div>
+    
+    <div class="intro-video-stage" id="intro-video-stage" title="Click to play / pause">
+      <video id="intro-video" playsinline preload="auto">
+        <source src="Intro%20Video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div id="intro-tap-overlay" class="intro-tap-overlay hidden">
+        <div class="intro-tap-pill">
+          <span class="tap-icon">▶</span>
+          <span id="intro-tap-text">CLICK ANYWHERE TO PLAY (SOUND ON 🔊)</span>
+        </div>
+      </div>
+      <div class="intro-progress-bar">
+        <div id="intro-progress-fill" class="intro-progress-fill"></div>
+      </div>
+    </div>
+
+    <div class="intro-footer">
+      <span class="intro-footnote">Press [SPACE] to pause/resume &nbsp;•&nbsp; [ESC] to enter site</span>
+      <span class="intro-status" id="intro-time-display">0:00 / 0:00</span>
+    </div>
+  </div>
+</div>
+
+<!-- Paper Grain -->
+<div id="grain">
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+<filter id="grain-filter"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch" result="noise"/>
+<feColorMatrix type="saturate" values="0" in="noise"/></filter>
+<rect width="100%" height="100%" filter="url(#grain-filter)"/>
+</svg>
+</div>
+
+<!-- Custom Cursor -->
+<div id="cursor-ring"><span id="cursor-text"></span></div>
+
+<!-- Top Bar -->
+<header id="topbar">
+  <div class="mode-switch" id="mode-switch">
+    <div class="indicator" id="mode-indicator"></div>
+    <button id="btn-archive" class="active" data-view="archive">01 / DYNAMIC AVL TREE</button>
+    <button id="btn-leetcode" data-view="leetcode">02 / LEETCODE: FOUNDER IDE</button>
+  </div>
+  <div class="logo">
+    <div class="jp">アルゴリズムの師</div>
+    <div class="en">PROF. VIOMESH SINGH</div>
+  </div>
+  <div class="right-bar">
+    <span class="status-badge">STATUS: O(1) TO FOUNDER 🚀</span>
+    <a href="https://www.linkedin.com/in/viomeshsingh" target="_blank" rel="noopener noreferrer" class="lbl box">LINKEDIN ↗</a>
+    <a href="https://www.instagram.com/viomeshsingh?srtk=NW1ya25xYWd3MGhi" target="_blank" rel="noopener noreferrer" class="lbl box">INSTAGRAM ↗</a>
+  </div>
+</header>
+
+<!-- VIEW 01: STEP-BY-STEP SELF-BALANCING AVL PHOTO TREE -->
+<main id="archive-view">
+  <!-- Floating Top Status Pill -->
+  <div id="avl-top-status">
+    <div class="status-pill">
+      <span class="sp-dot"></span>
+      <span id="sp-text">NODES IN TREE: 1 / 8 &nbsp;|&nbsp; TREE HEIGHT: 1 &nbsp;|&nbsp; STATUS: BALANCED (BF: +0)</span>
+    </div>
+  </div>
+
+  <!-- Floating Rebalance Toast Banner -->
+  <div id="avl-rebalance-toast">
+    <span class="toast-bolt">⚡</span>
+    <span id="toast-msg">AVL REBALANCE: LEFT ROTATION (RR CASE) ON NODE #10</span>
+  </div>
+
+  <!-- AVL Visualizer Viewport (Interactive Pan & Zoom Stage) -->
+  <div id="avl-viewport">
+    <div id="avl-world">
+      <svg id="avl-edges-svg"></svg>
+      <div id="avl-nodes-container"></div>
+    </div>
+  </div>
+
+  <!-- Sleek Archival Control Dock (Bottom-Center) -->
+  <div id="avl-control-dock">
+    <button class="dock-btn" id="dock-prev-btn" disabled>
+      <span class="dock-icon">◀</span> PREV STEP
+    </button>
+    <div class="dock-readout">
+      <div class="dock-step-badge" id="dock-step-badge">MEMORY 1 OF 8</div>
+      <div class="dock-log" id="dock-log">Tree initialized with Root #10 (Beta Tujhe C Ka printf() Bhi Nahi Aata). Ready to insert next memory.</div>
+    </div>
+    <button class="dock-btn primary" id="dock-next-btn">
+      NEXT MEMORY (INSERT + BALANCE) <span class="dock-icon">▶</span>
+    </button>
+    <button class="dock-btn" id="dock-auto-btn">
+      <span class="dock-icon">⏵</span> AUTO-BUILD TREE
+    </button>
+    <button class="dock-btn" id="dock-reset-btn" style="display:none;" title="Reset to 1 Node">
+      ↺ RESET
+    </button>
+  </div>
+</main>
+
+<!-- DETAIL OVERLAY (EXPANDED PAPER SHEET) -->
+<div id="detail">
+  <button class="close-detail" id="close-detail">✕ CLOSE / 閉じる</button>
+  <div class="detail-left" id="detail-left"></div>
+  <div class="detail-right" id="detail-right"></div>
+</div>
+
+<!-- ADD NOTE MODAL -->
+<div id="add-note-modal">
+  <div class="anm-box">
+    <h3>+ ADD YOUR FAREWELL NODE</h3>
+    <input type="text" id="anm-name" placeholder="Your name / batch...">
+    <textarea id="anm-msg" placeholder="Your farewell message for Viomesh Sir..."></textarea>
+    <div class="anm-actions">
+      <button class="lbl box" id="anm-cancel">CANCEL</button>
+      <button class="lbl box" id="anm-save" style="background:var(--cobalt);color:#fff;border-color:var(--cobalt)">SAVE NODE</button>
+    </div>
+  </div>
+</div>
+
+<!-- VIEW 02: LEETCODE IDE (FULL SCROLLABLE ARCHIVAL WORKSPACE) -->
+<section id="leetcode-view">
+  <div class="lc-left" id="lc-left"></div>
+  <div class="lc-right" id="lc-right"></div>
+</section>
+
+<!-- RESULTS MODAL -->
+<div id="results-modal">
+  <button class="close-results" id="close-results">✕ CLOSE / 閉じる</button>
+  <div class="result-header" id="result-header"></div>
+  <svg id="histogram" class="histogram" viewBox="0 0 600 180"></svg>
+  <div class="farewell-wall" id="farewell-wall"></div>
+  <div class="add-note-area" id="add-note-results">
+    <h3 style="font-size:12px;letter-spacing:.14em;font-weight:600">+ ADD YOUR STARTUP WISH</h3>
+    <input type="text" id="rn-name" placeholder="Your name / batch...">
+    <textarea id="rn-msg" placeholder="Your farewell or startup wish for Viomesh Sir..."></textarea>
+    <button class="lbl box" id="rn-save" style="background:var(--cobalt);color:#fff;border-color:var(--cobalt)">SUBMIT WISH</button>
+  </div>
+</div>
+
+<!-- Confetti Canvas -->
+<canvas id="confetti-canvas"></canvas>
+
+<script>
+(function(){
+'use strict';
+
+/* ═══════════════════════════════════════════════════════
+   §1  CONSTANTS & DATA
+   ═══════════════════════════════════════════════════════ */
+
+const MEMORIES = [
+  {
+    id: 'c-basics',
+    key: 10,
+    title: 'Beta Tujhe C Ka printf() Bhi Nahi Aata',
+    sub: 'SHOSHIN NO ROAST / 初心の洗礼 (C Foundations)',
+    complexity: 'O(1) Reality Check',
+    quote: '"Beta tujhe C ka printf() bhi nahi aata hoga! Before you dream of O(log n) trees and dynamic programming, show me you can write a clean main() function without a single segmentation fault."',
+    credit: 'First Year C Lab Batch',
+    treeLabel: 'NODE[10] ROOT',
+    imageSrc: 'Image-6.jpeg',
+    bgPos: 'center 20%'
+  },
+  {
+    id: 'recursion',
+    key: 20,
+    title: 'Recursion With Viomesh Sir',
+    sub: 'SAIKI NO KIWAMI / 再帰の極み (Call Stacks & Base Cases)',
+    complexity: 'O(2^n) Call Stack',
+    quote: '"\'To understand recursion, you must first understand recursion.\' Every tree traversal, divide-and-conquer, and backtracking algorithm started right here on your screen."',
+    credit: 'DSA Live Stream Audience',
+    treeLabel: 'NODE[20]',
+    imageSrc: 'Image-8.jpeg',
+    bgPos: 'center center'
+  },
+  {
+    id: 'doubts',
+    key: 30,
+    title: 'Any Doubts? Vaise Aate Toh Hai Nahi!',
+    sub: 'GIMON NO NAI SHITSU / 疑問なき教室 (Zero Doubts Policy)',
+    complexity: 'O(0) Doubts',
+    quote: '"\'Any doubts? Vaise doubts toh tumhe aate nahi hai!\' — The iconic lecture catchphrase that made 120 silent students burst out laughing and finally unmute to ask questions."',
+    credit: 'Front Row Backbenchers',
+    treeLabel: 'NODE[30]',
+    imageSrc: 'Image-9.jpeg',
+    bgPos: 'center 15%'
+  },
+  {
+    id: 'placement',
+    key: 40,
+    title: 'Job Is Available For EVERYONE!',
+    sub: 'SHUSHOKU NO MICHI / 就職の道 (Placement Motivation)',
+    complexity: 'O(n) Offers',
+    quote: '"\'Job is available for EVERYONE!\' You never let a single student lose hope during placement season. You broke down company OAs into solvable patterns and turned rejections into offers."',
+    credit: 'Placement Cell & Placed Engineers',
+    treeLabel: 'NODE[40]',
+    imageSrc: 'Image-2.jpeg',
+    bgPos: 'center center'
+  },
+  {
+    id: 'chai-trek',
+    key: 50,
+    title: 'Dijkstra\'s Shortest Path to Chai',
+    sub: 'CHAI TO TOZAN / 茶と登山 (O(1) Vibe & High Energy)',
+    complexity: 'O(1) Energy',
+    quote: '"Beyond the terminal screens and whiteboard dry runs: mountain air, sunglasses, and the shortest path algorithm applied to finding the best chai stall on the hills."',
+    credit: 'Campus Trekking Society',
+    treeLabel: 'NODE[50]',
+    imageSrc: 'Image-1.jpeg',
+    bgPos: 'center center'
+  },
+  {
+    id: 'architect',
+    key: 60,
+    title: 'The Whiteboard Architect',
+    sub: 'ARUGORIZUMU NO KYOJU / アルゴリズムの教授 (Faculty Cabin)',
+    complexity: 'O(log n) Master',
+    quote: '"Countless hours spent outside your faculty cabin reviewing research papers, optimizing database schemas, and understanding why balancing a tree in O(log n) is pure art."',
+    credit: 'Final Year Core Mentorship',
+    treeLabel: 'NODE[60]',
+    imageSrc: 'Image-3.jpeg',
+    bgPos: 'center 20%'
+  },
+  {
+    id: 'keynote',
+    key: 70,
+    title: 'How To Join My Company As Engineer',
+    sub: 'KIGYO HE NO SHOUTAI / 企業への招待 (Campus to Startup)',
+    complexity: 'O(E + V) Network',
+    quote: '"\'How to join My Company as an Engineer.\' The university auditorium fell completely silent as Viomesh Sir showed the slide that announced the leap from classroom teacher to startup founder."',
+    credit: 'Future Founding Engineers',
+    treeLabel: 'NODE[70]',
+    imageSrc: 'Image-7.jpeg',
+    bgPos: 'center center'
+  },
+  {
+    id: 'founder',
+    key: 80,
+    title: 'new Startup(\'Viomesh Ventures\') — Founder & CEO',
+    sub: 'SOGYO NO TOBIRA / 創業の扉 (Executive Founder)',
+    complexity: 'Valuation -> ∞',
+    quote: '"Not retiring—leveling up from shaping minds in lecture halls to building the future as a Founder & CEO. You\'ll always be our Root Node, Sir. Go build your unicorn!"',
+    credit: 'All Batches & Future Teammates',
+    treeLabel: 'NODE[80] FOUNDER',
+    imageSrc: 'Image-4.jpeg',
+    bgPos: 'center 15%'
+  }
+];
+
+const FAREWELL_NOTES = [
+  {name:'Arjun Mehta',batch:'CSE \'26',msg:'Viomesh Sir, your 8 AM energy was legendary. Go disrupt the world!'},
+  {name:'Priya Sharma',batch:'IT \'25',msg:'From arrays to startups — you always operated in O(1). Best of luck, Sir!'},
+  {name:'Rahul Verma',batch:'CSE \'25',msg:'The whiteboard will miss your freehand tree diagrams. We\'ll miss YOU.'},
+  {name:'Sneha Iyer',batch:'AI/ML \'26',msg:'You taught us DP and life optimization. Startup will be accepted on first submit!'},
+  {name:'Karan Singh',batch:'ECE \'26',msg:'Constraint dekho bhai! — forever echoing in every OA. Thank you, Sir.'},
+  {name:'Ananya Joshi',batch:'CSE \'26',msg:'The best professor we never slept through. Even at 8 AM. Legend.'},
+  {name:'Dev Patel',batch:'DSA TA \'25',msg:'Being your TA was the real O(1) lookup to career clarity. Miss you already.'},
+  {name:'Riya Gupta',batch:'Placement Cell',msg:'Hundreds of placements owe their recursion skills to your dry runs. 🫡'}
+];
+
+/* Preload Photo Nodes */
+MEMORIES.forEach(m => {
+  const img = new Image();
+  img.src = m.imageSrc;
+});
+
+/* ═══════════════════════════════════════════════════════
+   §2  DOM REFERENCES
+   ═══════════════════════════════════════════════════════ */
+
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+const cursorRing   = $('#cursor-ring');
+const cursorText   = $('#cursor-text');
+const detailEl     = $('#detail');
+const detailLeft   = $('#detail-left');
+const detailRight  = $('#detail-right');
+const leetcodeView = $('#leetcode-view');
+const archiveView  = $('#archive-view');
+const lcLeft       = $('#lc-left');
+const lcRight      = $('#lc-right');
+const resultsModal = $('#results-modal');
+const confettiCanvas = $('#confetti-canvas');
+const confettiCtx  = confettiCanvas.getContext('2d');
+const modeSwitchEl = $('#mode-switch');
+
+/* Page 1 AVL DOM Elements */
+const avlViewport      = $('#avl-viewport');
+const avlWorld         = $('#avl-world');
+const avlEdgesSvg      = $('#avl-edges-svg');
+const avlNodesContainer= $('#avl-nodes-container');
+const spText           = $('#sp-text');
+const rebalanceToast   = $('#avl-rebalance-toast');
+const toastMsg         = $('#toast-msg');
+const dockPrevBtn      = $('#dock-prev-btn');
+const dockNextBtn      = $('#dock-next-btn');
+const dockAutoBtn      = $('#dock-auto-btn');
+const dockResetBtn     = $('#dock-reset-btn');
+const dockStepBadge    = $('#dock-step-badge');
+const dockLog          = $('#dock-log');
+
+/* ═══════════════════════════════════════════════════════
+   §3  STATE
+   ═══════════════════════════════════════════════════════ */
+
+let currentView = 'archive';
+let cursorX = -100, cursorY = -100;
+let realCursorX = -100, realCursorY = -100;
+let cursorState = '';
+let detailOpen = false;
+let detailNode = null;
+let testsRunning = false;
+let confettiParticles = [];
+let reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* AVL Tree State */
+let activeTree = null;
+let currentStep = 1; // 1 to 8
+const TOTAL_MEMORIES = MEMORIES.length; // 8
+let isAutoBuilding = false;
+let autoBuildTimer = null;
+let activeToastTimer = null;
+let pendingRotationTimer = null;
+
+/* Pan & Zoom State */
+let panX = 0, panY = 0;
+let zoomScale = 1.35;
+let targetPanX = 0, targetPanY = 0;
+let targetZoomScale = 1.35;
+let isPanning = false;
+let startPanX = 0, startPanY = 0;
+
+/* Node Dimensions */
+const CARD_W = 216;
+const CARD_H = 260;
+
+/* Node Visual Tracker (Key -> State) */
+const nodeStates = new Map();
+
+/* ═══════════════════════════════════════════════════════
+   §4  AVL TREE DATA STRUCTURE & STEP-BY-STEP ENGINE
+   ═══════════════════════════════════════════════════════ */
+
+class AVLNode {
+  constructor(mem) {
+    this.key = mem.key;
+    this.mem = mem;
+    this.left = null;
+    this.right = null;
+    this.height = 1;
+    this.id = 'avl_' + mem.key;
+    this.targetX = 0;
+    this.targetY = 0;
+  }
+}
+
+function getNodeHeight(n) {
+  return n ? n.height : 0;
+}
+
+function getNodeBF(n) {
+  return n ? (getNodeHeight(n.left) - getNodeHeight(n.right)) : 0;
+}
+
+function updateNodeHeight(n) {
+  if (n) {
+    n.height = 1 + Math.max(getNodeHeight(n.left), getNodeHeight(n.right));
+  }
+}
+
+function cloneTree(n) {
+  if (!n) return null;
+  const copy = new AVLNode(n.mem);
+  copy.height = n.height;
+  copy.left = cloneTree(n.left);
+  copy.right = cloneTree(n.right);
+  return copy;
+}
+
+function rightRotate(y, evts) {
+  const x = y.left;
+  const T2 = x.right;
+  x.right = y;
+  y.left = T2;
+  updateNodeHeight(y);
+  updateNodeHeight(x);
+  if (evts) {
+    evts.push({
+      type: 'RIGHT',
+      nodeKey: y.key,
+      pivotKey: x.key,
+      msg: `RIGHT ROTATION (LL CASE) ON NODE #${y.key} (PIVOT #${x.key})`
+    });
+  }
+  return x;
+}
+
+function leftRotate(x, evts) {
+  const y = x.right;
+  const T2 = y.left;
+  y.left = x;
+  x.right = T2;
+  updateNodeHeight(x);
+  updateNodeHeight(y);
+  if (evts) {
+    evts.push({
+      type: 'LEFT',
+      nodeKey: x.key,
+      pivotKey: y.key,
+      msg: `LEFT ROTATION (RR CASE) ON NODE #${x.key} (PIVOT #${y.key})`
+    });
+  }
+  return y;
+}
+
+function rebalanceNode(n, evts) {
+  if (!n) return null;
+  updateNodeHeight(n);
+  const bf = getNodeBF(n);
+  if (bf > 1) {
+    if (getNodeBF(n.left) < 0) {
+      n.left = leftRotate(n.left, evts);
+    }
+    return rightRotate(n, evts);
+  }
+  if (bf < -1) {
+    if (getNodeBF(n.right) > 0) {
+      n.right = rightRotate(n.right, evts);
+    }
+    return leftRotate(n, evts);
+  }
+  return n;
+}
+
+function rebalanceFull(n, evts) {
+  if (!n) return null;
+  n.left = rebalanceFull(n.left, evts);
+  n.right = rebalanceFull(n.right, evts);
+  return rebalanceNode(n, evts);
+}
+
+function getLeftBottomMost(n) {
+  let curr = n;
+  while (curr && curr.left) curr = curr.left;
+  return curr;
+}
+
+function attachLeftBottomMost(root, newNode) {
+  if (!root) return newNode;
+  let curr = root;
+  while (curr.left) curr = curr.left;
+  curr.left = newNode;
+  return root;
+}
+
+function updateHeightsUpwards(n) {
+  if (!n) return 0;
+  n.height = 1 + Math.max(updateHeightsUpwards(n.left), updateHeightsUpwards(n.right));
+  return n.height;
+}
+
+/* ═══════════════════════════════════════════════════════
+   §5  PRE-COMPUTED STEP PIPELINE (LEFT-BOTTOM-MOST ATTACH)
+   ═══════════════════════════════════════════════════════ */
+
+const stepHistory = [];
+
+function generateStepHistory() {
+  stepHistory.length = 0;
+  let prevBalancedRoot = null;
+
+  for (let i = 0; i < MEMORIES.length; i++) {
+    const mem = MEMORIES[i];
+    const stepNum = i + 1;
+    const targetParent = getLeftBottomMost(prevBalancedRoot);
+    const targetParentKey = targetParent ? targetParent.key : null;
+
+    // 1. Build Pre-rotation tree: attach strictly to left-bottom-most node
+    const preRoot = cloneTree(prevBalancedRoot);
+    const newNodePre = new AVLNode(mem);
+    const attachedRoot = attachLeftBottomMost(preRoot, newNodePre);
+    updateHeightsUpwards(attachedRoot);
+
+    // Detect first imbalanced ancestor (BF > 1 or < -1)
+    let imbalancedNode = null;
+    function findImb(n) {
+      if (!n) return;
+      if (Math.abs(getNodeBF(n)) > 1 && !imbalancedNode) {
+        imbalancedNode = n;
+      }
+      findImb(n.left);
+      findImb(n.right);
+    }
+    findImb(attachedRoot);
+
+    // 2. Build Post-rotation tree via standard AVL rebalancing
+    const evts = [];
+    const postRoot = rebalanceFull(cloneTree(attachedRoot), evts);
+
+    stepHistory.push({
+      step: stepNum,
+      mem: mem,
+      targetParentKey: targetParentKey,
+      imbalancedKey: imbalancedNode ? imbalancedNode.key : null,
+      imbalancedBF: imbalancedNode ? getNodeBF(imbalancedNode) : 0,
+      hasRotation: evts.length > 0,
+      rotationEvent: evts[0] || null,
+      preRoot: attachedRoot,
+      postRoot: postRoot
+    });
+
+    prevBalancedRoot = postRoot;
+  }
+}
+
+generateStepHistory();
+
+/* ═══════════════════════════════════════════════════════
+   §6  TREE 2D LAYOUT & DYNAMIC ZOOM ENGINE
+   ═══════════════════════════════════════════════════════ */
+
+function computeTreePositions(root) {
+  if (!root) return [];
+  const nodesList = [];
+  let inOrderIndex = 0;
+  const colSpacing = 245;
+  const rowSpacing = 220;
+  const topPad = 80;
+
+  function inOrderWalk(n, depth) {
+    if (!n) return;
+    inOrderWalk(n.left, depth + 1);
+
+    n.targetX = inOrderIndex * colSpacing + 100;
+    n.targetY = depth * rowSpacing + topPad;
+    inOrderIndex++;
+    nodesList.push(n);
+
+    inOrderWalk(n.right, depth + 1);
+  }
+
+  inOrderWalk(root, 0);
+
+  function centerParents(n) {
+    if (!n) return;
+    centerParents(n.left);
+    centerParents(n.right);
+    if (n.left && n.right) {
+      n.targetX = (n.left.targetX + n.right.targetX) / 2;
+    }
+  }
+  centerParents(root);
+
+  return nodesList;
+}
+
+function calculateDynamicZoom(nodes) {
+  const count = nodes.length;
+  const viewW = avlViewport.clientWidth || window.innerWidth;
+  const viewH = avlViewport.clientHeight || window.innerHeight;
+
+  if (count <= 1) {
+    targetZoomScale = 1.35;
+    const singleNode = nodes[0];
+    if (singleNode) {
+      targetPanX = (viewW / 2) - ((singleNode.targetX + CARD_W / 2) * targetZoomScale);
+      targetPanY = ((viewH - 100) / 2) - ((singleNode.targetY + CARD_H / 2) * targetZoomScale);
+    }
+    return;
+  }
+
+  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+  nodes.forEach(n => {
+    minX = Math.min(minX, n.targetX);
+    maxX = Math.max(maxX, n.targetX + CARD_W);
+    minY = Math.min(minY, n.targetY);
+    maxY = Math.max(maxY, n.targetY + CARD_H);
+  });
+
+  const treeW = maxX - minX;
+  const treeH = maxY - minY;
+
+  if (count <= 3) {
+    targetZoomScale = 1.15;
+  } else if (count <= 5) {
+    targetZoomScale = 0.98;
+  } else {
+    const fitW = (viewW - 120) / treeW;
+    const fitH = (viewH - 180) / treeH;
+    targetZoomScale = Math.min(0.92, Math.max(0.52, Math.min(fitW, fitH)));
+  }
+
+  targetPanX = (viewW - treeW * targetZoomScale) / 2 - minX * targetZoomScale;
+  targetPanY = Math.max(45, (viewH - 110 - treeH * targetZoomScale) / 2 - minY * targetZoomScale);
+}
+
+/* ═══════════════════════════════════════════════════════
+   §7  PHOTO CARD DOM & SVG EDGE RENDERER
+   ═══════════════════════════════════════════════════════ */
+
+function getCardPhotoHTML(mem) {
+  return `
+    <div class="card-photo-frame">
+      <img src="${mem.imageSrc}" class="card-photo-img" alt="${escapeHTML(mem.title)}" draggable="false">
+      <div class="card-photo-overlay">
+        <span class="card-photo-badge">${escapeHTML(mem.complexity)}</span>
+      </div>
+    </div>
+  `;
+}
+
+function updateCardDOM(state) {
+  let card = document.getElementById(state.id);
+  const bf = state.bf;
+  const isImbalanced = state.isImbalanced;
+
+  if (!card) {
+    card = document.createElement('div');
+    card.id = state.id;
+    card.className = 'avl-node-card' + (state.isRoot ? ' root-card' : '') + ' new-node';
+    card.dataset.key = state.key;
+    card.style.transform = `translate(${state.renderX}px, ${state.renderY}px)`;
+
+    card.innerHTML = `
+      <div class="card-header-strip">
+        <span class="card-key-tag">#${state.key}</span>
+        <span class="card-bf-tag ${isImbalanced ? 'imbalanced' : ''}">BF: ${bf >= 0 ? '+' + bf : bf}</span>
+      </div>
+      ${getCardPhotoHTML(state.mem)}
+      <div class="card-caption">
+        <div class="card-title">${escapeHTML(state.mem.title)}</div>
+        <div class="card-complexity">${escapeHTML(state.mem.sub || state.mem.complexity)}</div>
+      </div>
+    `;
+
+    card.addEventListener('click', () => {
+      const memIdx = MEMORIES.findIndex(m => m.key === state.key);
+      if (memIdx >= 0) openDetail(memIdx);
+    });
+
+    card.addEventListener('mouseenter', () => { cursorState = 'open-mode'; });
+    card.addEventListener('mouseleave', () => { cursorState = ''; });
+
+    avlNodesContainer.appendChild(card);
+    setTimeout(() => card.classList.remove('new-node'), 700);
+  } else {
+    card.classList.toggle('root-card', state.isRoot);
+    card.classList.toggle('imbalance-flash', isImbalanced);
+    const bfTag = card.querySelector('.card-bf-tag');
+    if (bfTag) {
+      bfTag.textContent = isImbalanced ? `BF: ${bf > 0 ? '+' + bf : bf} [IMBALANCED]` : `BF: ${bf >= 0 ? '+' + bf : bf}`;
+      bfTag.className = `card-bf-tag ${isImbalanced ? 'imbalanced' : ''}`;
+    }
+  }
+
+  return card;
+}
+
+function rebuildSVGEdgeElements(tree, isPreRotation, stepInfo) {
+  if (!tree) {
+    avlEdgesSvg.innerHTML = '';
+    return;
+  }
+
+  const activeEdges = new Set();
+
+  function traverse(n) {
+    if (!n) return;
+    ['left', 'right'].forEach(dir => {
+      const child = n[dir];
+      if (child) {
+        const edgeId = `edge_${n.key}_${child.key}`;
+        activeEdges.add(edgeId);
+        let path = document.getElementById(edgeId);
+        if (!path) {
+          path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          path.classList.add('avl-edge');
+          path.id = edgeId;
+          path.dataset.parentKey = n.key;
+          path.dataset.childKey = child.key;
+          if (stepInfo && n.key === stepInfo.targetParentKey && child.key === stepInfo.mem.key) {
+            path.classList.add('new-edge');
+            setTimeout(() => path && path.classList.remove('new-edge'), 1200);
+          }
+          avlEdgesSvg.appendChild(path);
+        }
+        if (!isPreRotation && stepInfo && stepInfo.rotationEvent) {
+          if (n.key === stepInfo.rotationEvent.nodeKey || child.key === stepInfo.rotationEvent.pivotKey) {
+            path.classList.add('rotating-edge');
+            setTimeout(() => path && path.classList.remove('rotating-edge'), 1000);
+          }
+        }
+        traverse(child);
+      }
+    });
+  }
+  traverse(tree);
+
+  Array.from(avlEdgesSvg.querySelectorAll('path.avl-edge')).forEach(path => {
+    if (!activeEdges.has(path.id)) {
+      path.remove();
+    }
+  });
+}
+
+function applyTree(tree, isPreRotation, stepInfo) {
+  activeTree = tree;
+  const nodes = computeTreePositions(tree);
+  const activeKeys = new Set(nodes.map(n => n.key));
+
+  calculateDynamicZoom(nodes);
+
+  nodes.forEach(n => {
+    let state = nodeStates.get(n.key);
+    const bf = getNodeBF(n);
+    const isImb = Math.abs(bf) > 1;
+    const isRoot = (n === tree);
+
+    if (!state) {
+      let startX = n.targetX;
+      let startY = n.targetY;
+      if (stepInfo && stepInfo.targetParentKey && nodeStates.has(stepInfo.targetParentKey)) {
+        const parentState = nodeStates.get(stepInfo.targetParentKey);
+        startX = parentState.renderX - 110;
+        startY = parentState.renderY + 60;
+      }
+      state = {
+        id: 'avl_' + n.key,
+        key: n.key,
+        mem: n.mem,
+        renderX: startX,
+        renderY: startY,
+        targetX: n.targetX,
+        targetY: n.targetY,
+        isRoot: isRoot,
+        bf: bf,
+        isImbalanced: isImb
+      };
+      nodeStates.set(n.key, state);
+    } else {
+      state.targetX = n.targetX;
+      state.targetY = n.targetY;
+      state.isRoot = isRoot;
+      state.bf = bf;
+      state.isImbalanced = isImb;
+    }
+
+    updateCardDOM(state);
+  });
+
+  // Smoothly remove inactive cards
+  $$('.avl-node-card').forEach(card => {
+    const key = Number(card.dataset.key);
+    if (!activeKeys.has(key)) {
+      card.classList.add('removing');
+      setTimeout(() => {
+        if (!activeKeys.has(key)) {
+          card.remove();
+          nodeStates.delete(key);
+        }
+      }, 350);
+    }
+  });
+
+  rebuildSVGEdgeElements(tree, isPreRotation, stepInfo);
+}
+
+function showRebalanceToast(msg, isImbalance = false) {
+  if (activeToastTimer) clearTimeout(activeToastTimer);
+  toastMsg.textContent = msg;
+  rebalanceToast.classList.toggle('imbalance-warning', isImbalance);
+  rebalanceToast.classList.add('show');
+  activeToastTimer = setTimeout(() => {
+    rebalanceToast.classList.remove('show');
+    activeToastTimer = null;
+  }, isImbalance ? 2400 : 2000);
+}
+
+/* ═══════════════════════════════════════════════════════
+   §8  SMOOTH STEPPING CONTROLS (NEXT / PREV / AUTO / RESET)
+   ═══════════════════════════════════════════════════════ */
+
+function updateDockUI() {
+  dockStepBadge.textContent = `MEMORY ${currentStep} OF 8`;
+  dockPrevBtn.disabled = (currentStep <= 1);
+
+  if (currentStep >= TOTAL_MEMORIES) {
+    dockNextBtn.innerHTML = `★ ALL 8 MEMORIES BALANCED — LAUNCH LEETCODE IDE ▶`;
+    dockNextBtn.classList.add('launch-ide');
+    dockResetBtn.style.display = 'inline-flex';
+  } else {
+    dockNextBtn.innerHTML = `NEXT MEMORY (INSERT + BALANCE) <span class="dock-icon">▶</span>`;
+    dockNextBtn.classList.remove('launch-ide');
+    dockResetBtn.style.display = (currentStep > 1) ? 'inline-flex' : 'none';
+  }
+}
+
+function stepForward() {
+  if (currentStep >= TOTAL_MEMORIES) {
+    switchView('leetcode');
+    return;
+  }
+
+  // If a rotation timer is pending from rapid clicking, finish it cleanly
+  if (pendingRotationTimer) {
+    clearTimeout(pendingRotationTimer);
+    pendingRotationTimer = null;
+    const prevInfo = stepHistory[currentStep - 1];
+    applyTree(prevInfo.postRoot, false, prevInfo);
+  }
+
+  currentStep++;
+  const stepInfo = stepHistory[currentStep - 1];
+
+  // Phase 1: Smoothly insert at Left Bottom-Most Node
+  applyTree(stepInfo.preRoot, true, stepInfo);
+  updateDockUI();
+
+  if (stepInfo.hasRotation) {
+    const parentMsg = stepInfo.targetParentKey ? ` under left-bottom node #${stepInfo.targetParentKey}` : '';
+    dockLog.textContent = `⚡ Phase 1/2: Added #${stepInfo.mem.key}${parentMsg} -> Imbalance at Node #${stepInfo.imbalancedKey} (BF: +${stepInfo.imbalancedBF}).`;
+    showRebalanceToast(`IMBALANCE DETECTED: NODE #${stepInfo.imbalancedKey} (BF: +${stepInfo.imbalancedBF})`, true);
+
+    const height = getNodeHeight(stepInfo.preRoot);
+    spText.innerHTML = `NODES IN TREE: ${currentStep} / 8 &nbsp;|&nbsp; TREE HEIGHT: ${height} &nbsp;|&nbsp; STATUS: <span style="color:var(--vermilion);font-weight:700">IMBALANCE (BF: +${stepInfo.imbalancedBF})</span>`;
+
+    // Phase 2: Smooth Rotation & Rebalance
+    const rotationDelay = isAutoBuilding ? 650 : 750;
+    pendingRotationTimer = setTimeout(() => {
+      pendingRotationTimer = null;
+      applyTree(stepInfo.postRoot, false, stepInfo);
+
+      const balHeight = getNodeHeight(stepInfo.postRoot);
+      const rootBF = getNodeBF(stepInfo.postRoot);
+      const bfStr = rootBF >= 0 ? '+' + rootBF : rootBF;
+      spText.innerHTML = `NODES IN TREE: ${currentStep} / 8 &nbsp;|&nbsp; TREE HEIGHT: ${balHeight} &nbsp;|&nbsp; STATUS: <span style="color:var(--cobalt)">BALANCED (BF: ${bfStr})</span>`;
+
+      dockLog.textContent = `⚡ Phase 2/2: ${stepInfo.rotationEvent.msg} complete! Tree balanced.`;
+      showRebalanceToast(stepInfo.rotationEvent.msg, false);
+    }, rotationDelay);
+  } else {
+    const balHeight = getNodeHeight(stepInfo.postRoot);
+    const rootBF = getNodeBF(stepInfo.postRoot);
+    const bfStr = rootBF >= 0 ? '+' + rootBF : rootBF;
+    spText.innerHTML = `NODES IN TREE: ${currentStep} / 8 &nbsp;|&nbsp; TREE HEIGHT: ${balHeight} &nbsp;|&nbsp; STATUS: <span style="color:var(--cobalt)">BALANCED (BF: ${bfStr})</span>`;
+
+    const parentMsg = stepInfo.targetParentKey ? ` under left-bottom node #${stepInfo.targetParentKey}` : '';
+    dockLog.textContent = `Added #${stepInfo.mem.key} (${stepInfo.mem.title})${parentMsg}. Tree in perfect balance.`;
+    applyTree(stepInfo.postRoot, false, stepInfo);
+  }
+}
+
+function stepBackward() {
+  if (pendingRotationTimer) {
+    clearTimeout(pendingRotationTimer);
+    pendingRotationTimer = null;
+  }
+  if (currentStep <= 1) return;
+
+  currentStep--;
+  const stepInfo = stepHistory[currentStep - 1];
+  applyTree(stepInfo.postRoot, false, stepInfo);
+  updateDockUI();
+
+  const height = getNodeHeight(stepInfo.postRoot);
+  const rootBF = getNodeBF(stepInfo.postRoot);
+  const bfStr = rootBF >= 0 ? '+' + rootBF : rootBF;
+  spText.innerHTML = `NODES IN TREE: ${currentStep} / 8 &nbsp;|&nbsp; TREE HEIGHT: ${height} &nbsp;|&nbsp; STATUS: <span style="color:var(--cobalt)">BALANCED (BF: ${bfStr})</span>`;
+  dockLog.textContent = `Stepped back to Memory #${stepInfo.mem.key} (${stepInfo.mem.title}). Tree balanced.`;
+}
+
+function resetTree() {
+  if (isAutoBuilding) toggleAutoBuild();
+  if (pendingRotationTimer) {
+    clearTimeout(pendingRotationTimer);
+    pendingRotationTimer = null;
+  }
+  currentStep = 1;
+  const stepInfo = stepHistory[0];
+  applyTree(stepInfo.postRoot, false, stepInfo);
+  updateDockUI();
+
+  const height = getNodeHeight(stepInfo.postRoot);
+  const rootBF = getNodeBF(stepInfo.postRoot);
+  const bfStr = rootBF >= 0 ? '+' + rootBF : rootBF;
+  spText.innerHTML = `NODES IN TREE: 1 / 8 &nbsp;|&nbsp; TREE HEIGHT: ${height} &nbsp;|&nbsp; STATUS: <span style="color:var(--cobalt)">BALANCED (BF: ${bfStr})</span>`;
+  dockLog.textContent = `Tree reset to Root Memory #10 (${stepInfo.mem.title}). Ready to insert next memory.`;
+}
+
+function toggleAutoBuild() {
+  isAutoBuilding = !isAutoBuilding;
+  if (isAutoBuilding) {
+    dockAutoBtn.innerHTML = `<span class="dock-icon">⏸</span> PAUSE AUTO-BUILD`;
+    dockAutoBtn.classList.add('primary');
+    scheduleAutoBuildTick();
+  } else {
+    dockAutoBtn.innerHTML = `<span class="dock-icon">⏵</span> AUTO-BUILD TREE`;
+    dockAutoBtn.classList.remove('primary');
+    if (autoBuildTimer) clearTimeout(autoBuildTimer);
+    autoBuildTimer = null;
+  }
+}
+
+function scheduleAutoBuildTick() {
+  if (!isAutoBuilding) return;
+  if (currentStep >= TOTAL_MEMORIES) {
+    toggleAutoBuild();
+    return;
+  }
+
+  const nextStepInfo = stepHistory[currentStep];
+  const delay = (nextStepInfo && nextStepInfo.hasRotation) ? 2200 : 1600;
+
+  autoBuildTimer = setTimeout(() => {
+    if (!isAutoBuilding) return;
+    stepForward();
+    scheduleAutoBuildTick();
+  }, delay);
+}
+
+/* ═══════════════════════════════════════════════════════
+   §9  PAN & ZOOM VIEWPORT CONTROLS
+   ═══════════════════════════════════════════════════════ */
+
+avlViewport.addEventListener('pointerdown', e => {
+  if (e.target.closest('.avl-node-card')) return;
+  isPanning = true;
+  startPanX = e.clientX - panX;
+  startPanY = e.clientY - panY;
+  avlViewport.classList.add('grabbing');
+  avlViewport.setPointerCapture(e.pointerId);
+});
+
+avlViewport.addEventListener('pointermove', e => {
+  if (!isPanning) return;
+  panX = e.clientX - startPanX;
+  panY = e.clientY - startPanY;
+  targetPanX = panX;
+  targetPanY = panY;
+});
+
+avlViewport.addEventListener('pointerup', e => {
+  if (!isPanning) return;
+  isPanning = false;
+  avlViewport.classList.remove('grabbing');
+  try { avlViewport.releasePointerCapture(e.pointerId); } catch (_) {}
+});
+
+avlViewport.addEventListener('wheel', e => {
+  e.preventDefault();
+  const rect = avlViewport.getBoundingClientRect();
+  const mouseX = e.clientX - rect.left;
+  const mouseY = e.clientY - rect.top;
+
+  const factor = e.deltaY < 0 ? 1.12 : 0.89;
+  const newScale = Math.max(0.4, Math.min(2.2, targetZoomScale * factor));
+
+  targetPanX = mouseX - (mouseX - targetPanX) * (newScale / targetZoomScale);
+  targetPanY = mouseY - (mouseY - targetPanY) * (newScale / targetZoomScale);
+  targetZoomScale = newScale;
+}, { passive: false });
+
+/* ═══════════════════════════════════════════════════════
+   §10  MEMORY DETAIL OVERLAY (EXPANDED PAPER SHEET)
+   ═══════════════════════════════════════════════════════ */
+
+function openDetail(memIdx){
+  if(detailOpen) return;
+  detailOpen = true;
+  const mem = MEMORIES[memIdx];
+
+  detailLeft.innerHTML = `
+    <div class="node-tag">${mem.treeLabel} — ${mem.sub}</div>
+    <h1 class="mem-title">${mem.title}</h1>
+    <div class="meta-badges">
+      <span>KEY #${mem.key}</span>
+      <span>${mem.complexity}</span>
+      <span>${mem.credit}</span>
+    </div>
+    <p class="quote-text">${mem.quote}</p>
+    <p class="credit"><em>Archived in Prof. Viomesh Singh's Dynamic AVL Tree — Next Node: Startup Founder. 創業記念</em></p>
+    <div class="detail-actions">
+      <button class="lbl box" id="detail-compile">COMPILE IN LEETCODE IDE / コード実行</button>
+      <button class="lbl box" id="detail-add-note">+ ADD YOUR FAREWELL NODE</button>
+      <button class="lbl box" id="detail-toggle-aspect" title="Toggle aspect ratio">TOGGLE ASPECT: FULL SIZE ↔ NATURAL</button>
+    </div>
+  `;
+
+  // Right column: Full-size clear photo display (aspect ratio adapted to fit full size without cropping)
+  detailRight.innerHTML = `
+    <div class="detail-photo-stage">
+      <div class="detail-photo-wrapper">
+        <img id="detail-img-elem" src="${mem.imageSrc}" class="detail-full-img" alt="${escapeHTML(mem.title)}" draggable="false">
+        <div class="detail-photo-badge-bar">
+          <span class="dp-tag key">#${mem.key}</span>
+          <span class="dp-tag comp">${escapeHTML(mem.complexity)}</span>
+          <span class="dp-tag status" id="detail-aspect-status">FULL SIZE (ADAPTED)</span>
+        </div>
+      </div>
+    </div>
+  `;
+
+  detailEl.classList.add('open');
+  detailEl.animate([
+    { clipPath: 'inset(35% 35% 35% 35%)', transform: 'rotate(-4deg) scale(0.88)' },
+    { clipPath: 'inset(0% 0% 0% 0%)', transform: 'rotate(0deg) scale(1)' }
+  ], {
+    duration: reducedMotion ? 10 : 850,
+    easing: 'cubic-bezier(.76,0,.18,1)',
+    fill: 'forwards'
+  });
+
+  setTimeout(() => {
+    const compileBtn = document.getElementById('detail-compile');
+    const addNoteBtn = document.getElementById('detail-add-note');
+    const toggleAspectBtn = document.getElementById('detail-toggle-aspect');
+    const detailImg = document.getElementById('detail-img-elem');
+    const aspectStatus = document.getElementById('detail-aspect-status');
+
+    if(compileBtn) compileBtn.addEventListener('click', () => {
+      closeDetail();
+      setTimeout(() => switchView('leetcode'), 350);
+    });
+    if(addNoteBtn) addNoteBtn.addEventListener('click', () => {
+      document.getElementById('add-note-modal').classList.add('open');
+    });
+    if(toggleAspectBtn && detailImg) {
+      toggleAspectBtn.addEventListener('click', () => {
+        const currentFit = detailImg.style.objectFit || 'fill';
+        const nextFit = (currentFit === 'fill') ? 'contain' : 'fill';
+        detailImg.style.objectFit = nextFit;
+        if(aspectStatus) {
+          aspectStatus.textContent = (nextFit === 'fill') ? 'FULL SIZE (ADAPTED)' : 'NATURAL FIT';
+        }
+      });
+    }
+  }, 80);
+}
+
+function closeDetail(){
+  if(!detailOpen) return;
+  detailEl.animate([
+    { clipPath: 'inset(0% 0% 0% 0%)', transform: 'rotate(0deg) scale(1)' },
+    { clipPath: 'inset(35% 35% 35% 35%)', transform: 'rotate(-4deg) scale(0.88)' }
+  ], {
+    duration: reducedMotion ? 10 : 500,
+    easing: 'cubic-bezier(.76,0,.18,1)',
+    fill: 'forwards'
+  }).onfinish = () => {
+    detailEl.classList.remove('open');
+    detailOpen = false;
+  };
+}
+
+/* ═══════════════════════════════════════════════════════
+   §11  LEETCODE IDE VIEW (SCROLLABLE ARCHIVAL WORKSPACE)
+   ═══════════════════════════════════════════════════════ */
+
+function buildLeetcodeView(){
+  lcLeft.innerHTML = `
+    <h2>2026. The Founder's Optimal Substructure
+      <span class="diff-badge">HARD — UNICORN TIER</span>
+      <span class="accepted-badge">ACCEPTED ✓</span>
+    </h2>
+    <div class="problem-text">
+      <p>Given an extraordinary Data Structures &amp; Algorithms professor <strong>Viomesh Singh</strong> who has transformed <code>N</code> batches of confused freshmen into <code>O(1)</code> problem solvers, return the optimal trajectory as he leaves the university lecture hall to <strong>launch his own startup company</strong>.</p>
+      <p><em>Note: The professor is <strong>NOT retiring</strong>. Standard retirement algorithms (<code>while(retired) relax()</code>) will throw an <code>InvalidStateException</code>. You must optimize for <code>StartupValuation -> ∞</code> while preserving <code>StudentGratitude</code> in an immutable Self-Balancing AVL Tree.</em></p>
+    </div>
+    <div class="example-block">
+      <strong>Example 1:</strong><br>
+      <strong>Input:</strong> lectureTime = "08:00 AM", topic = "Segment Trees", coffeeLevel = 0<br>
+      <strong>Output:</strong> "100% Attendance &amp; Zero Asleep"<br>
+      <strong>Explanation:</strong> Viomesh Sir's dry-run energy bypasses morning fatigue in O(1) time.
+    </div>
+    <div class="example-block">
+      <strong>Example 2:</strong><br>
+      <strong>Input:</strong> currentRole = "Professor", nextMove = "Founder &amp; CEO"<br>
+      <strong>Output:</strong> "Unicorn Status Unlocked 🚀"<br>
+      <strong>Explanation:</strong> The optimal substructure of an iconic career leads to startup greatness.
+    </div>
+    <div class="constraints-box">
+      <h3 style="font-size:11px;letter-spacing:.14em;font-weight:600;margin-bottom:8px">CONSTRAINTS</h3>
+      <p>1 &lt;= ViomeshSir.Patience &lt;= ∞</p>
+      <p>0 &lt;= TLE_Allowed_In_Class &lt;= 0</p>
+      <p>Whiteboard_Markers_Consumed &gt;= 10^5</p>
+      <p>isRetiring == false &amp;&amp; isBuildingCompany == true</p>
+    </div>
+    <div class="connect-links">
+      <a href="https://www.linkedin.com/in/viomeshsingh" target="_blank" rel="noopener noreferrer" class="lbl box">CONNECT ON LINKEDIN ↗</a>
+      <a href="https://www.instagram.com/viomeshsingh?srtk=NW1ya25xYWd3MGhi" target="_blank" rel="noopener noreferrer" class="lbl box">FOLLOW ON INSTAGRAM ↗</a>
+    </div>
+  `;
+
+  const codeLines = [
+    '// 2026. The Founder\'s Optimal Substructure',
+    '// Language: C++ / TypeScript Tribute Hybrid',
+    '',
+    'class ViomeshSinghFounder extends DSAProfessor {',
+    '  private:',
+    '    string name = "Viomesh Singh";',
+    '    string role = "Professor -> Founder & CEO";',
+    '    int patience = INT_MAX;',
+    '    bool isRetiring = false;',
+    '    AVLTree<StudentMemory> legacyTree;',
+    '',
+    '  public:',
+    '    Result solveFounderTransition() {',
+    '      // Step 1: Master every DSA topic known to mankind',
+    '      for (auto& topic : {Arrays, Trees, Graphs, DP}) {',
+    '        this->teachWithPassion(topic);  // O(1) GOAT',
+    '        students.push_back(inspired());',
+    '      }',
+    '',
+    '      // Step 2: Survive 10,000+ 8 AM lectures',
+    '      while (morningLectures--) {',
+    '        dryRun(segmentTree, whiteboard);',
+    '        assert(studentsAsleep == 0);  // Always passed',
+    '      }',
+    '',
+    '      // Step 3: Self-balancing AVL legacy tree',
+    '      legacyTree.insert(everyBatchEver);',
+    '      assert(legacyTree.isBalanced()); // Always O(log N)',
+    '',
+    '      // Step 4: Launch startup (NOT retirement!)',
+    '      auto startup = new Startup("Viomesh Ventures");',
+    '      startup->valuation = INFINITY;',
+    '      startup->team = legacyTree.getAllNodes();',
+    '',
+    '      return {',
+    '        status: "ACCEPTED",',
+    '        runtime: "0ms — Beats 100.00%",',
+    '        message: "From Root Node to Founder 🚀"',
+    '      };',
+    '    }',
+    '};',
+    '',
+    '// Verdict: ACCEPTED ✓',
+    '// Runtime: 0ms | Memory: O(∞) hearts',
+  ];
+
+  const lineHTML = codeLines.map((line, i) =>
+    `<div class="editor-line"><span class="line-num">${i + 1}</span><span class="line-code">${escapeHTML(line)}</span></div>`
+  ).join('');
+
+  lcRight.innerHTML = `
+    <div class="editor-tabs">
+      <button class="active">Solution.cpp</button>
+      <button>FounderEngine.ts</button>
+    </div>
+    <div class="code-editor" id="code-editor">${lineHTML}</div>
+    <div class="console-area" id="console-area">
+      <div style="color:var(--muted);font-size:11px;letter-spacing:.1em">CONSOLE — Ready to run...</div>
+    </div>
+    <div class="action-bar">
+      <button class="run-btn" id="run-code-btn">▶ RUN CODE</button>
+      <button class="submit-btn" id="submit-btn">★ SUBMIT SOLUTION</button>
+    </div>
+  `;
+
+  document.getElementById('run-code-btn').addEventListener('click', runCode);
+  document.getElementById('submit-btn').addEventListener('click', submitSolution);
+
+  lcRight.querySelectorAll('.editor-tabs button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      lcRight.querySelectorAll('.editor-tabs button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+}
+
+function escapeHTML(str){
+  if(!str) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+const TEST_CASES = [
+  {name:'Case 1: 8_AM_Dry_Run_Mastery', time:'Passed (0 ms)'},
+  {name:'Case 2: Invert_10000_Binary_Trees', time:'Passed (0 ms)'},
+  {name:'Case 3: Zero_Segmentation_Faults_In_Mentorship', time:'Passed (0 ms)'},
+  {name:'Case 4: Launch_Own_Company_Not_Retiring', time:'Passed (Seed -> Series A -> IPO 🚀)'},
+];
+
+async function runCode(){
+  if(testsRunning) return;
+  testsRunning = true;
+  const consoleEl = document.getElementById('console-area');
+  consoleEl.innerHTML = '<div style="color:var(--muted);font-size:11px;letter-spacing:.1em;margin-bottom:8px">RUNNING TEST CASES...</div>';
+
+  for(let i = 0; i < TEST_CASES.length; i++){
+    await new Promise(r => setTimeout(r, 350));
+    const tc = TEST_CASES[i];
+    const row = document.createElement('div');
+    row.className = 'test-case';
+
+    const bar = document.createElement('div');
+    bar.style.cssText = 'height:2px;background:var(--cobalt);width:0%;transition:width .6s var(--ease);margin-bottom:4px';
+    consoleEl.appendChild(bar);
+    requestAnimationFrame(() => { bar.style.width = '100%'; });
+
+    await new Promise(r => setTimeout(r, 650));
+    bar.remove();
+
+    row.innerHTML = `
+      <span class="tc-status pass">✓ PASS</span>
+      <span class="tc-name">${tc.name}</span>
+      <span class="tc-time" style="color:var(--emerald)">${tc.time}</span>
+    `;
+    consoleEl.appendChild(row);
+  }
+
+  const summary = document.createElement('div');
+  summary.style.cssText = 'margin-top:10px;font-weight:600;color:var(--emerald);letter-spacing:.1em;font-size:11px';
+  summary.textContent = '✓ ALL 4 TEST CASES PASSED — READY TO SUBMIT';
+  consoleEl.appendChild(summary);
+  testsRunning = false;
+}
+
+async function submitSolution(){
+  fireConfetti();
+  await new Promise(r => setTimeout(r, 700));
+  showResultsModal();
+}
+
+/* ═══════════════════════════════════════════════════════
+   §12  CONFETTI & RESULTS MODAL
+   ═══════════════════════════════════════════════════════ */
+
+function fireConfetti(){
+  const colors = ['#1F3FB0','#D9381E','#D4AF37','#141414','#EDEBE6'];
+  const cx = window.innerWidth / 2;
+  const cy = window.innerHeight / 2;
+
+  for(let i = 0; i < 120; i++){
+    const angle = Math.random() * Math.PI * 2;
+    const speed = 200 + Math.random() * 600;
+    confettiParticles.push({
+      x: cx,
+      y: cy,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed - 300,
+      w: 6 + Math.random() * 8,
+      h: 4 + Math.random() * 6,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      rotation: Math.random() * 360,
+      rotV: (Math.random() - 0.5) * 720,
+      life: 1,
+      decay: 0.006 + Math.random() * 0.008,
+      gravity: 600 + Math.random() * 300
+    });
+  }
+}
+
+function updateConfetti(dt){
+  if(!confettiParticles.length) return;
+  confettiCanvas.width = window.innerWidth;
+  confettiCanvas.height = window.innerHeight;
+  confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+
+  for(let i = confettiParticles.length - 1; i >= 0; i--){
+    const p = confettiParticles[i];
+    p.vy += p.gravity * dt;
+    p.vx *= 0.99;
+    p.x += p.vx * dt;
+    p.y += p.vy * dt;
+    p.rotation += p.rotV * dt;
+    p.life -= p.decay;
+
+    if(p.life <= 0 || p.y > window.innerHeight + 50){
+      confettiParticles.splice(i, 1);
+      continue;
+    }
+
+    confettiCtx.save();
+    confettiCtx.translate(p.x, p.y);
+    confettiCtx.rotate(p.rotation * Math.PI / 180);
+    confettiCtx.globalAlpha = Math.min(1, p.life * 2);
+    confettiCtx.fillStyle = p.color;
+    confettiCtx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+    confettiCtx.restore();
+  }
+
+  if(!confettiParticles.length){
+    confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+  }
+}
+
+function showResultsModal(){
+  const header = document.getElementById('result-header');
+  header.innerHTML = `
+    <h2>Accepted</h2>
+    <p>Runtime: 0ms — Beats 100.00% of Professors &amp; Founders</p>
+    <p style="margin-top:4px;color:var(--muted);font-size:11px">Memory: O(∞) hearts | Status: O(1) TO FOUNDER 🚀</p>
+  `;
+
+  buildHistogram();
+  buildFarewellWall();
+  resultsModal.classList.add('open');
+}
+
+function buildHistogram(){
+  const svg = document.getElementById('histogram');
+  svg.innerHTML = '';
+  const W = 600, H = 180;
+  const barW = 24, gap = 6;
+  const distribution = [2,5,12,25,45,65,85,95,60,35,20,8,3];
+  const maxVal = 95;
+  const startX = 40;
+
+  const axisLine = document.createElementNS('http://www.w3.org/2000/svg','line');
+  axisLine.setAttribute('x1', startX); axisLine.setAttribute('y1', H-25);
+  axisLine.setAttribute('x2', W-10); axisLine.setAttribute('y2', H-25);
+  axisLine.setAttribute('stroke','var(--ink)'); axisLine.setAttribute('stroke-width','1');
+  svg.appendChild(axisLine);
+
+  const label = document.createElementNS('http://www.w3.org/2000/svg','text');
+  label.setAttribute('x', W/2); label.setAttribute('y', H-5);
+  label.setAttribute('text-anchor','middle');
+  label.setAttribute('font-family','JetBrains Mono, monospace');
+  label.setAttribute('font-size','9'); label.setAttribute('fill','var(--muted)');
+  label.textContent = 'Runtime Distribution (ms)';
+  svg.appendChild(label);
+
+  distribution.forEach((val, i) => {
+    const x = startX + i * (barW + gap);
+    const barH = (val / maxVal) * (H - 50);
+    const y = H - 25 - barH;
+    const isViomesh = i === 0;
+
+    const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
+    rect.setAttribute('x', x); rect.setAttribute('y', y);
+    rect.setAttribute('width', barW); rect.setAttribute('height', barH);
+    rect.setAttribute('rx','2');
+    rect.setAttribute('fill', isViomesh ? 'var(--cobalt)' : 'rgba(20,20,20,.12)');
+    svg.appendChild(rect);
+
+    if(isViomesh){
+      const badge = document.createElementNS('http://www.w3.org/2000/svg','text');
+      badge.setAttribute('x', x + barW/2); badge.setAttribute('y', y - 8);
+      badge.setAttribute('text-anchor','middle');
+      badge.setAttribute('font-family','JetBrains Mono, monospace');
+      badge.setAttribute('font-size','8'); badge.setAttribute('fill','var(--cobalt)');
+      badge.setAttribute('font-weight','600');
+      badge.textContent = '0ms ← VIOMESH SIR';
+      svg.appendChild(badge);
+    }
+
+    const tl = document.createElementNS('http://www.w3.org/2000/svg','text');
+    tl.setAttribute('x', x + barW/2); tl.setAttribute('y', H - 14);
+    tl.setAttribute('text-anchor','middle');
+    tl.setAttribute('font-family','JetBrains Mono, monospace');
+    tl.setAttribute('font-size','7'); tl.setAttribute('fill','var(--muted)');
+    tl.textContent = i === 0 ? '0' : (i * 50) + '';
+    svg.appendChild(tl);
+  });
+}
+
+function buildFarewellWall(){
+  const wall = document.getElementById('farewell-wall');
+  let extraNotes = [];
+  try { extraNotes = JSON.parse(localStorage.getItem('viomesh-notes') || '[]'); } catch(e){}
+  const allNotes = [...FAREWELL_NOTES, ...extraNotes];
+
+  wall.innerHTML = '<h3 style="grid-column:1/-1;font-size:12px;letter-spacing:.16em;font-weight:600;margin-bottom:4px">STUDENT FAREWELL WALL &amp; STARTUP LAUNCH WISHES</h3>';
+  allNotes.forEach(n => {
+    const card = document.createElement('div');
+    card.className = 'farewell-card';
+    card.innerHTML = `
+      <div class="fc-name">${escapeHTML(n.name)}</div>
+      <div class="fc-msg">${escapeHTML(n.msg)}</div>
+      <div class="fc-batch">${escapeHTML(n.batch || '')}</div>
+    `;
+    wall.appendChild(card);
+  });
+}
+
+/* ═══════════════════════════════════════════════════════
+   §13  VIEW SWITCHING & UI EVENTS
+   ═══════════════════════════════════════════════════════ */
+
+function switchView(view){
+  if(view === currentView) return;
+  currentView = view;
+
+  const btnArchive = document.getElementById('btn-archive');
+  const btnLeetcode = document.getElementById('btn-leetcode');
+  const indicator = document.getElementById('mode-indicator');
+
+  if(view === 'leetcode'){
+    btnArchive.classList.remove('active');
+    btnLeetcode.classList.add('active');
+    leetcodeView.classList.add('open');
+    indicator.style.left = btnArchive.offsetWidth + 'px';
+    indicator.style.width = btnLeetcode.offsetWidth + 'px';
+  } else {
+    btnLeetcode.classList.remove('active');
+    btnArchive.classList.add('active');
+    leetcodeView.classList.remove('open');
+    indicator.style.left = '0px';
+    indicator.style.width = btnArchive.offsetWidth + 'px';
+  }
+}
+
+function updateCursor(dt){
+  const factor = 1 - Math.exp(-16 * dt);
+  cursorX += (realCursorX - cursorX) * factor;
+  cursorY += (realCursorY - cursorY) * factor;
+  cursorRing.style.left = cursorX + 'px';
+  cursorRing.style.top = cursorY + 'px';
+
+  cursorRing.className = '';
+  cursorText.textContent = '';
+  if(cursorState === 'open-mode'){
+    cursorRing.classList.add('open-mode');
+    cursorText.textContent = 'OPEN / 開く';
+  } else if(cursorState === 'btn-hover'){
+    cursorRing.classList.add('btn-hover');
+  } else if(cursorState === 'shrink'){
+    cursorRing.classList.add('shrink');
+  }
+}
+
+/* Pointer tracking */
+document.addEventListener('mousemove', e => {
+  realCursorX = e.clientX;
+  realCursorY = e.clientY;
+});
+
+/* Keyboard Navigation */
+document.addEventListener('keydown', e => {
+  // Intro Video controls
+  const introModal = document.getElementById('intro-modal');
+  if (introModal && introModal.classList.contains('open') && !introModal.classList.contains('closing')) {
+    if (e.key === 'Escape' || e.key === 'Enter') {
+      e.preventDefault();
+      if (window.dismissIntroModal) window.dismissIntroModal();
+      return;
+    }
+    if (e.key === ' ' || e.key === 'k' || e.key === 'K') {
+      e.preventDefault();
+      const vid = document.getElementById('intro-video');
+      if (vid) {
+        vid.muted = false;
+        vid.volume = 1.0;
+        if (vid.paused) vid.play(); else vid.pause();
+      }
+      return;
+    }
+    return;
+  }
+
+  if(detailOpen && e.key === 'Escape'){
+    closeDetail();
+    return;
+  }
+  if(resultsModal.classList.contains('open') && e.key === 'Escape'){
+    resultsModal.classList.remove('open');
+    return;
+  }
+  if(document.getElementById('add-note-modal').classList.contains('open') && e.key === 'Escape'){
+    document.getElementById('add-note-modal').classList.remove('open');
+    return;
+  }
+
+  // Page 1 Step Navigation via Keyboard
+  if(currentView === 'archive' && !detailOpen && !resultsModal.classList.contains('open')){
+    if(e.key === 'ArrowRight' || e.key === ' '){
+      e.preventDefault();
+      stepForward();
+    } else if(e.key === 'ArrowLeft'){
+      e.preventDefault();
+      stepBackward();
+    }
+  }
+});
+
+/* Mode Switch */
+document.getElementById('btn-archive').addEventListener('click', () => switchView('archive'));
+document.getElementById('btn-leetcode').addEventListener('click', () => switchView('leetcode'));
+
+/* Dock Buttons */
+dockNextBtn.addEventListener('click', stepForward);
+dockPrevBtn.addEventListener('click', stepBackward);
+dockAutoBtn.addEventListener('click', toggleAutoBuild);
+dockResetBtn.addEventListener('click', resetTree);
+
+/* Close Detail */
+document.getElementById('close-detail').addEventListener('click', closeDetail);
+
+/* Close Results Modal */
+document.getElementById('close-results').addEventListener('click', () => {
+  resultsModal.classList.remove('open');
+});
+
+/* Add Note Modals */
+document.getElementById('anm-cancel').addEventListener('click', () => {
+  document.getElementById('add-note-modal').classList.remove('open');
+});
+
+document.getElementById('anm-save').addEventListener('click', () => {
+  const name = document.getElementById('anm-name').value.trim();
+  const msg = document.getElementById('anm-msg').value.trim();
+  if(!name || !msg) return;
+  let notes = [];
+  try { notes = JSON.parse(localStorage.getItem('viomesh-notes') || '[]'); } catch(e){}
+  notes.push({name, msg, batch:'Custom Tribute'});
+  localStorage.setItem('viomesh-notes', JSON.stringify(notes));
+  document.getElementById('anm-name').value = '';
+  document.getElementById('anm-msg').value = '';
+  document.getElementById('add-note-modal').classList.remove('open');
+});
+
+document.getElementById('rn-save').addEventListener('click', () => {
+  const name = document.getElementById('rn-name').value.trim();
+  const msg = document.getElementById('rn-msg').value.trim();
+  if(!name || !msg) return;
+  let notes = [];
+  try { notes = JSON.parse(localStorage.getItem('viomesh-notes') || '[]'); } catch(e){}
+  notes.push({name, msg, batch:'Startup Wish'});
+  localStorage.setItem('viomesh-notes', JSON.stringify(notes));
+  document.getElementById('rn-name').value = '';
+  document.getElementById('rn-msg').value = '';
+  buildFarewellWall();
+});
+
+/* Hover state management */
+document.addEventListener('mouseover', e => {
+  const el = e.target.closest('button, a.lbl.box, .lbl.box, input');
+  if(el && !el.closest('.avl-node-card')){
+    cursorState = 'btn-hover';
+    return;
+  }
+  const vidStage = e.target.closest('.intro-video-stage');
+  if (vidStage) {
+    cursorState = 'open-mode';
+    cursorText.textContent = 'PLAY / UNMUTE';
+    return;
+  }
+});
+document.addEventListener('mouseout', e => {
+  const el = e.target.closest('button, a.lbl.box, .lbl.box, input, .intro-video-stage');
+  if(el && !el.closest('.avl-node-card')){
+    cursorState = '';
+  }
+});
+
+/* ═══════════════════════════════════════════════════════
+   §14  MAIN rAF ANIMATION LOOP
+   ═══════════════════════════════════════════════════════ */
+
+let lastTime = 0;
+
+function mainLoop(timestamp){
+  const dt = lastTime ? Math.min((timestamp - lastTime) / 1000, 0.05) : 0.016;
+  lastTime = timestamp;
+
+  // 1. Smoothly interpolate pan & zoom in world
+  const panFactor = 1 - Math.exp(-7.5 * dt);
+  panX += (targetPanX - panX) * panFactor;
+  panY += (targetPanY - panY) * panFactor;
+  zoomScale += (targetZoomScale - zoomScale) * panFactor;
+  avlWorld.style.transform = `translate(${panX}px, ${panY}px) scale(${zoomScale})`;
+
+  // 2. Smoothly interpolate each card's (x, y) coordinates & update DOM
+  const nodeFactor = 1 - Math.exp(-8.5 * dt);
+
+  nodeStates.forEach(n => {
+    n.renderX += (n.targetX - n.renderX) * nodeFactor;
+    n.renderY += (n.targetY - n.renderY) * nodeFactor;
+    const cardEl = document.getElementById(n.id);
+    if (cardEl) {
+      cardEl.style.transform = `translate(${n.renderX}px, ${n.renderY}px)`;
+    }
+  });
+
+  // 3. Smoothly redraw SVG Bezier edges following cards
+  $$('#avl-edges-svg path.avl-edge').forEach(edge => {
+    const parentKey = Number(edge.dataset.parentKey);
+    const childKey = Number(edge.dataset.childKey);
+    const parent = nodeStates.get(parentKey);
+    const child = nodeStates.get(childKey);
+
+    if (parent && child) {
+      const px = parent.renderX + CARD_W / 2;
+      const py = parent.renderY + CARD_H;
+      const cx = child.renderX + CARD_W / 2;
+      const cy = child.renderY;
+      const midY = (py + cy) / 2;
+      edge.setAttribute('d', `M ${px} ${py} C ${px} ${midY}, ${cx} ${midY}, ${cx} ${cy}`);
+    }
+  });
+
+  // 4. Update cursor & confetti
+  updateCursor(dt);
+  updateConfetti(dt);
+
+  requestAnimationFrame(mainLoop);
+}
+
+/* ═══════════════════════════════════════════════════════
+   §15  INTRO VIDEO POPUP & SMOOTH SITE TRANSITION
+   ═══════════════════════════════════════════════════════ */
+
+let introDismissed = false;
+
+function initIntroVideo() {
+  const introModal = document.getElementById('intro-modal');
+  const introVideo = document.getElementById('intro-video');
+  const skipBtn = document.getElementById('intro-skip-btn');
+  const muteBtn = document.getElementById('intro-mute-btn');
+  const muteIcon = document.getElementById('intro-mute-icon');
+  const tapOverlay = document.getElementById('intro-tap-overlay');
+  const progressFill = document.getElementById('intro-progress-fill');
+  const timeDisplay = document.getElementById('intro-time-display');
+
+  if (!introModal || !introVideo) return;
+
+  // Ensure intro modal is visible on every page visit or reload
+  introModal.classList.add('open');
+  introModal.classList.remove('closing');
+  introModal.style.display = 'flex';
+  introDismissed = false;
+
+  // STRICT REQUIREMENT: Intro video is ALWAYS UNMUTED
+  introVideo.muted = false;
+  introVideo.volume = 1.0;
+
+  function formatTime(sec) {
+    if (!sec || isNaN(sec)) return '0:00';
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return `${m}:${s < 10 ? '0' : ''}${s}`;
+  }
+
+  function transitionToSite() {
+    if (introDismissed) return;
+    introDismissed = true;
+
+    // Fade out audio gracefully if playing
+    try {
+      const fadeInterval = setInterval(() => {
+        if (introVideo.volume > 0.15) {
+          introVideo.volume = Math.max(0, introVideo.volume - 0.2);
+        } else {
+          clearInterval(fadeInterval);
+          introVideo.pause();
+        }
+      }, 40);
+    } catch (_) {
+      introVideo.pause();
+    }
+
+    // Trigger smooth fade & scale exit transition to original site
+    introModal.classList.add('closing');
+
+    setTimeout(() => {
+      introModal.classList.remove('open');
+      introModal.style.display = 'none';
+      introVideo.pause();
+
+      // Show welcome notification on the original site
+      showRebalanceToast("WELCOME TO PROF. VIOMESH SINGH'S TRIBUTE ARCHIVE 🚀");
+    }, 700);
+  }
+
+  // Skip / Enter site button
+  if (skipBtn) {
+    skipBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      transitionToSite();
+    });
+  }
+
+  // Video time & progress bar updates
+  introVideo.addEventListener('timeupdate', () => {
+    if (introVideo.duration) {
+      const pct = (introVideo.currentTime / introVideo.duration) * 100;
+      if (progressFill) progressFill.style.width = pct + '%';
+      if (timeDisplay) {
+        timeDisplay.textContent = `${formatTime(introVideo.currentTime)} / ${formatTime(introVideo.duration)}`;
+      }
+    }
+  });
+
+  // Automatically transition to original site when video finishes playing!
+  introVideo.addEventListener('ended', () => {
+    transitionToSite();
+  });
+
+  function startUnmutedPlayback() {
+    introVideo.muted = false;
+    introVideo.volume = 1.0;
+    const p = introVideo.play();
+    if (p !== undefined) {
+      p.then(() => {
+        if (tapOverlay) tapOverlay.classList.add('hidden');
+      }).catch(() => {
+        if (tapOverlay) tapOverlay.classList.remove('hidden');
+      });
+    }
+  }
+
+  // Clicking on the video stage to play/pause with unmuted audio
+  const videoStage = document.getElementById('intro-video-stage') || document.querySelector('.intro-video-stage');
+  if (videoStage) {
+    videoStage.addEventListener('click', () => {
+      if (introVideo.paused) {
+        startUnmutedPlayback();
+      } else {
+        introVideo.pause();
+      }
+    });
+  }
+
+  // Attempt unmuted autoplay immediately on page load
+  introVideo.currentTime = 0;
+  introVideo.muted = false;
+  introVideo.volume = 1.0;
+
+  const playPromise = introVideo.play();
+  if (playPromise !== undefined) {
+    playPromise.then(() => {
+      // Unmuted autoplay succeeded immediately!
+      if (tapOverlay) tapOverlay.classList.add('hidden');
+    }).catch(() => {
+      // Browser requires initial user interaction for sound: show prominent prompt
+      if (tapOverlay) tapOverlay.classList.remove('hidden');
+
+      // Listen for the very first interaction anywhere to trigger full sound playback
+      const triggerPlay = () => {
+        startUnmutedPlayback();
+        window.removeEventListener('pointerdown', triggerPlay);
+        window.removeEventListener('click', triggerPlay);
+        window.removeEventListener('keydown', triggerPlay);
+      };
+      window.addEventListener('pointerdown', triggerPlay, { once: true });
+      window.addEventListener('click', triggerPlay, { once: true });
+      window.addEventListener('keydown', triggerPlay, { once: true });
+    });
+  }
+
+  // Expose transition function for keyboard listener
+  window.dismissIntroModal = transitionToSite;
+}
+
+/* ═══════════════════════════════════════════════════════
+   §16  INITIALIZATION
+   ═══════════════════════════════════════════════════════ */
+
+function init(){
+  buildLeetcodeView();
+
+  // Initialize Page 1 with exactly 1 node (Step 1 of 8)
+  currentStep = 1;
+  const initialStep = stepHistory[0];
+  applyTree(initialStep.postRoot, false, initialStep);
+  updateDockUI();
+
+  // Launch Intro Video popup on every visit/reload
+  initIntroVideo();
+
+  // Mode indicator initial sizing
+  requestAnimationFrame(() => {
+    const btnArchive = document.getElementById('btn-archive');
+    const indicator = document.getElementById('mode-indicator');
+    if (btnArchive && indicator) {
+      indicator.style.left = '0px';
+      indicator.style.width = btnArchive.offsetWidth + 'px';
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    confettiCanvas.width = window.innerWidth;
+    confettiCanvas.height = window.innerHeight;
+    if (activeTree) {
+      const nodes = computeTreePositions(activeTree);
+      calculateDynamicZoom(nodes);
+    }
+  });
+
+  confettiCanvas.width = window.innerWidth;
+  confettiCanvas.height = window.innerHeight;
+
+  requestAnimationFrame(mainLoop);
+}
+
+init();
+})();
+</script>
+</body>
+</html>
